@@ -8,6 +8,7 @@
 
 # Stretch Goals
 1. users can start threads on messages
-2. Logo / Landing / Welcome page has cool hover animation
-3. Admins can pin messages to pin section of channels
-4. Notifications
+2. when a user messages a link to another website, the text is turned into a link and works as expected
+3. Logo / Landing / Welcome page has cool hover animation
+4. Admins can pin messages to pin section of channels
+5. Notifications
