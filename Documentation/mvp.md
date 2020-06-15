@@ -6,7 +6,7 @@
 5. channels have basic admin functionality ( admins can set channel topic and ban users )
 6. users can react to messages with emojis
 
-# stretch goals
+# Stretch Goals
 1. users can start threads on messages
 2. Logo / Landing / Welcome page has cool hover animation
 3. Admins can pin messages to pin section of channels
