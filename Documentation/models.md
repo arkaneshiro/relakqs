@@ -1,7 +1,6 @@
 # Models
 
 ## Model List
-
 - Users
 - Containers
 - Container Users
@@ -13,7 +12,6 @@
 
 
 ### Users
-
 | column    | type    | max length | default | constraints      |
 | --------- | ------- | ---------- | ------- | ---------------- |
 | aviUrl    | text    | none       | no      |                  |
@@ -24,7 +22,6 @@
 
 
 ### Containers
-
 | column       | type    | max length | default | constraints                          |
 | ------------ | ------- | ---------- | ------- | ------------------------------------ |
 | admin_id     | integer | none       | no      | nullable references: (Users.Id)      |
@@ -41,7 +38,6 @@
 
 
 ### Messages
-
 | column       | type    | max length | default | constraints                          |
 | ------------ | ------- | ---------- | ------- | ------------------------------------ |
 | user_id      | integer | none       | no      | not null references: (Users.Id)      |

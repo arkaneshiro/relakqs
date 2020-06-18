@@ -1,7 +1,7 @@
 # Soundzone Feature List
 1. Users
     * Login / Register
-    * Authentication via Auth0
+    * Authentication with JWT
     * Update basic user info: Bio, Avi
 2. Messaging
     * Channels
@@ -63,6 +63,5 @@
       * React
       * Redux
       * Material UI
-      * AUTH0
     * Python
       * Flask

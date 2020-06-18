@@ -5,7 +5,7 @@
 4. users can create and search for channels
 5. channels admins can set channel topic
 
-# Stretch Goals
+## Stretch Goals
 1. Notifications
 2. users can react to messages with emojis
 3. users can start threads on messages
