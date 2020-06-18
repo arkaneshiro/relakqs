@@ -3,7 +3,7 @@ relaqks is a simple messaging app
 
 Check out relakqs here:
 
-Backend for relakqs here:
+Backend for relakqs here: [relakqs-backend](https://github.com/arkaneshiro/relakqs-backend)
 
 ## Documentation Links
 - [Feature List](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/feature-list.md)
