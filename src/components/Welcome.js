@@ -1,29 +1,57 @@
-import React from "react";
-import { connect } from "react-redux";
-import { receiveUser } from "../actions/userActions";
+import React, { useState, } from "react";
+import { connect, useDispatch } from "react-redux";
+import { login } from "../actions/authActions";
+import styles from '../styles/Welcome.module.css';
 
-const Welcome = ({ users, addUser }) => {
-  const usersArray = Object.values(users);
+const Welcome = ({ authToken, currentUserId, }) => {
+  const dispatch = useDispatch()
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const updateValue = cb => e => cb(e.target.value);
+
+  const handlesubmit = e => {
+    e.preventDefault();
+    dispatch(login(username, password))
+  }
+
+  const loginGuest = () => {
+    dispatch(login('Guest', 'guestPassword'))
+  }
+
   return (
     <div>
       <ul>
-        {usersArray.map((user) => (
-          <li>{user.name}</li>
-        ))}
+        <li>authToken: {authToken}</li>
+        <li>currentUserId: {currentUserId}</li>
       </ul>
-      <button onClick={() => addUser({ name: "Danny Devito", id: 3 })}>
-        Add Danny Devito
-      </button>
+      <form className={styles.form} onSubmit={handlesubmit}>
+        <label className={styles.label} htmlFor="username" >Username:
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={updateValue(setUsername)}
+          />
+        </label>
+        <label className={styles.label} htmlFor="password" >Password:
+          <input
+            type="text"
+            id="password"
+            value={password}
+            onChange={updateValue(setPassword)}
+          />
+        </label>
+        <input className={styles.submitInput} type="submit" id='submit-login' value="Sign In" />
+        <input className={styles.submitInput} onClick={loginGuest} type="button" id='submit-login-guest' value="Sign In as Guest" />
+      </form>
     </div>
   );
 };
 
 const mstp = (state) => ({
-  users: state.users,
+  authToken: state.auth.authToken,
+  currentUserId: state.auth.currentUserId
 });
 
-const mdtp = (dispatch) => ({
-  addUser: (user) => dispatch(receiveUser(user)),
-});
-
-export default connect(mstp, mdtp)(Welcome);
+export default connect(mstp)(Welcome);
