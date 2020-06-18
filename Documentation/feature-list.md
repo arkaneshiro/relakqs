@@ -9,7 +9,8 @@
       * all members of channel can see all other members messages
       * users who create a channel can set its name and initial topic
       * users who create a channel are its 'admin'
-      * admins can edit the channel topic and remove / block users from channels
+      * admins can edit the channel topic
+      * admins can remove / block users from channels (stretch)
 
     * Direct Messaging
       * users can search for other users by name
@@ -17,7 +18,7 @@
     * Both
       * users can see when other users in a DM or channel are typing
       * messages update in real time
-      * users can react with emojis to messages, and a counter of each reaction appears
+      * users can react with emojis to messages, and a counter of each reaction appears (stretch)
       * users can start a thread on any message, and react with emojis to thread messages (stretch)
 
 3. UI Design
@@ -32,7 +33,7 @@
       * same sidebar as landing
       * member list (fixed size, scrollable) / pinned (stretch) / topic header (pop up)
       * extra admin features
-        * member list dropdown has ban button
+        * member list dropdown has ban button (stretch)
         * topic header pop up has edit feature
     * DM View
       * same sidebar as landing
@@ -42,13 +43,15 @@
       * search bar that searches user names or channel names
     * Pop Up Elements
       * Profile Edit / View / Ban (hover on Avis)
-      * Message Emoji Reaction Pane (hover on messages)
+      * Message Emoji Reaction Pane (stretch) (hover on messages)
       * Threads (stretch) (hover on messages)
 
 4. Stretch goals
-    * Threads
-    * Automatic Message Linking
     * Notifications
+    * Reactions
+    * Threads
+    * Banning
+    * Automatic Message Linking
     * Fun text animations
     * Message Pinning
 
@@ -59,5 +62,7 @@
       * Node.js
       * React
       * Redux
+      * Material UI
+      * AUTH0
     * Python
       * Flask
