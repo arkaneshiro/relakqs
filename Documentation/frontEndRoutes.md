@@ -10,8 +10,8 @@
   * 'getting started' box
     * --- Backend Routes Needed ---
     * GET for relevant channels & DMs
-    * POST for create DM
     * PUT for update Bio or Avi
+    * DELETE for leave channel
 # Channel Browser - /channels
   * Sidebar
   * Header with search bar for channels
@@ -43,4 +43,5 @@
   * search bar for selecting channels or DMs
     * --- Backend Routes Needed ---
     * GET for channel names, DM groups, and all other user names (for searching)
+    * POST for create DM
     * POST for messages
