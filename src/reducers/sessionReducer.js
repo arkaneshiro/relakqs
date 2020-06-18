@@ -1,6 +1,6 @@
-import { SET_TOKEN, LOGOUT } from "../actions/authActions";
+import { SET_TOKEN, LOGOUT } from "../actions/sessionActions";
 
-const defaultAuthState = {
+const defaultSessionState = {
   authToken: null,
   currentUserId: null,
 }
@@ -22,7 +22,7 @@ export default function reducer(state = {}, action) {
     case LOGOUT: {
       return Object.assign(
         newState,
-        defaultAuthState
+        defaultSessionState
       )
     }
     default:

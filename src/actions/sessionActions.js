@@ -41,9 +41,9 @@ export const login = (username, password) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { token, user: { id } } = await res.json();
-    persistUser(token, id);
-    dispatch(setToken(token, id));
+    const { authToken, currentUserId: id } = await res.json();
+    persistUser(authToken, id);
+    dispatch(setToken(authToken, id));
   } catch (err) {
     console.error(err);
   }

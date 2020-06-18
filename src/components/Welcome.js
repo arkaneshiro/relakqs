@@ -1,6 +1,6 @@
 import React, { useState, } from "react";
 import { connect, useDispatch } from "react-redux";
-import { login } from "../actions/authActions";
+import { login } from "../actions/sessionActions";
 import styles from '../styles/Welcome.module.css';
 
 const Welcome = ({ authToken, currentUserId, }) => {
@@ -36,7 +36,7 @@ const Welcome = ({ authToken, currentUserId, }) => {
         </label>
         <label className={styles.label} htmlFor="password" >Password:
           <input
-            type="text"
+            type="password"
             id="password"
             value={password}
             onChange={updateValue(setPassword)}
@@ -50,8 +50,8 @@ const Welcome = ({ authToken, currentUserId, }) => {
 };
 
 const mstp = (state) => ({
-  authToken: state.auth.authToken,
-  currentUserId: state.auth.currentUserId
+  authToken: state.session.authToken,
+  currentUserId: state.session.currentUserId
 });
 
 export default connect(mstp)(Welcome);

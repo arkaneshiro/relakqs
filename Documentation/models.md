@@ -14,8 +14,8 @@
 ### Users
 | column    | type    | max length | default | constraints      |
 | --------- | ------- | ---------- | ------- | ---------------- |
-| aviUrl    | text    | none       | no      |                  |
-| userName  | varchar | 20         | no      | not null, unique |
+| avi_url    | text    | none       | no      |                  |
+| username  | varchar | 20         | no      | not null, unique |
 | password  | binary  | none       | no      | not null         |
 | email     | varchar | 50         | no      | not null, unique |
 | bio       | varchar | 100        | no      | not null         |
