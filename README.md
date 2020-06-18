@@ -10,4 +10,4 @@ Backend for relakqs here:
 - [MVP](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/mvp.md)
 - [Front End Routes](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/frontEndRoutes.md)
 - [Back End Routes](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/backEndRoutes.md)
-- [Schema Image](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/schema.png)
+- [Models](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/models.md)
