@@ -1,6 +1,5 @@
 import React, { } from "react";
 import { useSelector } from "react-redux";
-// import styles from '../styles/Welcome.module.css';
 import LoginRegister from './LoginRegister.js'
 
 export const Welcome = props => {

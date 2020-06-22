@@ -59,6 +59,7 @@ export const register = (username, email, password, bio) => async (dispatch) => 
     });
     if (!res.ok) throw res;
     const { authToken, currentUserId: { id } } = await res.json();
+    persistUser(authToken, id);
     dispatch(setToken(authToken, id));
   } catch (err) {
     console.error(err);

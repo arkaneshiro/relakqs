@@ -1,7 +1,6 @@
 import React, { } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/sessionActions";
-import styles from '../styles/Sidebar.module.css';
 
 export const Sidebar = props => {
     const dispatch = useDispatch()
@@ -12,15 +11,20 @@ export const Sidebar = props => {
       {currentUserId ?
         <div>
           <div>
-            LoggedIn
+            Avi
           </div>
           <input
-            className={styles.logout}
             onClick={() => { dispatch(logout()) }}
             type="button"
             id='logout'
             value="Log Out"
           />
+          <div>
+            Channels
+          </div>
+          <div>
+            Direct Messages
+          </div>
         </div>
         :
         <div>
