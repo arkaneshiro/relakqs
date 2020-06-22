@@ -4,8 +4,14 @@ import "./index.css";
 import App from "./App";
 import configureStore from "./configureStore";
 
-// you can optionally pass configureStore whatever you want your initial state to look like
-const store = configureStore();
+const preloadedState = {
+  session: {
+      authToken: localStorage.getItem('relakqs-credentials'),
+      currentUserId: localStorage.getItem('relakqs-user'),
+  },
+}
+
+const store = configureStore(preloadedState);
 
 ReactDOM.render(
   <React.StrictMode>

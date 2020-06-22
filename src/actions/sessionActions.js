@@ -49,17 +49,17 @@ export const login = (username, password) => async (dispatch) => {
   }
 };
 
-export const register = (username, email, password, bio, imgUrl) => async (dispatch) => {
+export const register = (username, email, password, bio) => async (dispatch) => {
   try {
-    const body = JSON.stringify({ username, email, password, bio, imgUrl })
-    const res = await fetch(`${apiBaseUrl}/user`, {
+    const body = JSON.stringify({ username, email, password, bio })
+    const res = await fetch(`${apiBaseUrl}/user/`, {
       method: "POST",
       body,
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { token, user: { id } } = await res.json();
-    dispatch(setToken(token, id));
+    const { authToken, currentUserId: { id } } = await res.json();
+    dispatch(setToken(authToken, id));
   } catch (err) {
     console.error(err);
   }
