@@ -32,6 +32,14 @@ export const LoginRegister = props => {
     dispatch(login('Guest', 'password'))
   }
 
+  const switchMode = () => {
+    setRegisterMode(!registerMode)
+    setUsername('')
+    setEmail('')
+    setPassword('')
+    setBio('')
+  }
+
   return (
     <>
       {registerMode ?
@@ -52,6 +60,8 @@ export const LoginRegister = props => {
                 label="Username"
                 name="username"
                 autoComplete="username"
+                value={username}
+                className={styles.field}
                 onChange={updateValue(setUsername)}
               />
               <TextField
@@ -64,6 +74,8 @@ export const LoginRegister = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                className={styles.field}
                 onChange={updateValue(setPassword)}
               />
               <TextField
@@ -77,6 +89,8 @@ export const LoginRegister = props => {
                 label="Bio"
                 id="bio"
                 autoComplete="current-bio"
+                value={bio}
+                className={styles.field}
                 onChange={updateValue(setBio)}
               />
               <TextField
@@ -88,6 +102,8 @@ export const LoginRegister = props => {
                 label="Email"
                 name="email"
                 autoComplete="email"
+                value={email}
+                className={styles.field}
                 onChange={updateValue(setEmail)}
               />
               <Button
@@ -99,52 +115,12 @@ export const LoginRegister = props => {
               >
                 Register
               </Button>
-              <Link onClick={() => { setRegisterMode(false) }} href="#" variant="body2">
+              <Link className={styles.form_change} onClick={() => { switchMode() }} href="#" variant="body2">
                 {"Already have an account? Sign In"}
               </Link>
             </form>
           </div>
         </Container>
-
-
-        // <form className={styles.form} onSubmit={handlesubmit}>
-        //   <label className={styles.label} htmlFor="username" >Username:
-        //     <input
-        //       type="text"
-        //       id="username"
-        //       value={username}
-        //       onChange={updateValue(setUsername)}
-        //     />
-        //   </label>
-        //   <label className={styles.label} htmlFor="email" >Email:
-        //     <input
-        //       type="text"
-        //       id="email"
-        //       value={email}
-        //       onChange={updateValue(setEmail)}
-        //     />
-        //   </label>
-        //   <label className={styles.label} htmlFor="password" >Password:
-        //     <input
-        //       type="password"
-        //       id="password"
-        //       value={password}
-        //       onChange={updateValue(setPassword)}
-        //     />
-        //   </label>
-        //   <label className={styles.label} htmlFor="bio" >Bio:
-        //     <textarea
-        //       id="bio"
-        //       value={bio}
-        //       onChange={updateValue(setBio)}
-        //     />
-        //   </label>
-        //   <input className={styles.submitInput} type="submit" id='submit-login' value="Register" />
-        //   <div className={styles.switchForm} onClick={() => { setRegisterMode(false) }} id='switch-to-login'>
-        //     Already have an account?
-        //     Click Here To Login!
-        //   </div>
-        // </form>
         :
         // Login Form
         <Container component="main" maxWidth="xs">
@@ -164,6 +140,8 @@ export const LoginRegister = props => {
                 name="username"
                 autoComplete="username"
                 autoFocus
+                value={username}
+                className={styles.field}
                 onChange={updateValue(setUsername)}
               />
               <TextField
@@ -176,6 +154,8 @@ export const LoginRegister = props => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                className={styles.field}
                 onChange={updateValue(setPassword)}
               />
               <Button
@@ -196,7 +176,7 @@ export const LoginRegister = props => {
               >
                 Sign In as Guest
               </Button>
-              <Link onClick={() => { setRegisterMode(true) }} href="#" variant="body2">
+              <Link className={styles.form_change} onClick={() => { switchMode() }} href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </form>
