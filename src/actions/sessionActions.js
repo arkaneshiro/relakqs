@@ -2,6 +2,7 @@ const { apiBaseUrl } = require("../config");
 
 // ACTIONS
 export const SET_TOKEN = 'relakqs/authentication/SET_TOKEN';
+export const LOAD_USER = 'relakqs/authentication/LOGOUT';
 export const LOGOUT = 'relakqs/authentication/LOGOUT';
 
 // ACTION CREATORS
@@ -24,6 +25,15 @@ export const setToken = (authToken, currentUserId) => {
   }
 };
 
+export const loadUser = (username, aviUrl, bio) => {
+  return {
+    type: LOAD_USER,
+    username,
+    aviUrl,
+    bio,
+  }
+};
+
 export const logout = () => {
   removeUser();
   return {
@@ -41,9 +51,9 @@ export const login = (username, password) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { authToken, currentUserId: id } = await res.json();
-    persistUser(authToken, id);
+    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio } = await res.json();
     dispatch(setToken(authToken, id));
+    dispatch(loadUser(currentUsername, aviUrl, bio))
   } catch (err) {
     console.error(err);
   }
@@ -58,9 +68,9 @@ export const register = (username, email, password, bio) => async (dispatch) => 
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { authToken, currentUserId: id } = await res.json();
-    persistUser(authToken, id);
+    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio: currentBio } = await res.json();
     dispatch(setToken(authToken, id));
+    dispatch(loadUser(currentUsername, aviUrl, currentBio))
   } catch (err) {
     console.error(err);
   }

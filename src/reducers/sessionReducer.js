@@ -1,4 +1,4 @@
-import { SET_TOKEN, LOGOUT } from "../actions/sessionActions";
+import { SET_TOKEN, LOGOUT, LOAD_USER } from "../actions/sessionActions";
 
 const defaultSessionState = {
   authToken: null,
@@ -16,6 +16,16 @@ export default function reducer(state = defaultSessionState, action) {
         {
           authToken: action.authToken,
           currentUserId: action.currentUserId,
+        }
+      )
+    }
+    case LOAD_USER: {
+      return Object.assign(
+        newState,
+        {
+          username: action.username,
+          aviUrl: action.aviUrl,
+          bio: action.bio,
         }
       )
     }
