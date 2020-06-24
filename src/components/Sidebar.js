@@ -1,17 +1,23 @@
 import React, { } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/sessionActions";
+import useStyles from '../styles/SidebarStyles'
+
 
 export const Sidebar = props => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const styles = useStyles();
   const currentUserId = useSelector(state => state.session.currentUserId)
 
   return (
-    <div>
+    <div className={styles.paper}>
       {currentUserId ?
         <div>
           <div>
             Avi
+          </div>
+          <div>
+            current Id: {currentUserId}
           </div>
           <input
             onClick={() => { dispatch(logout()) }}

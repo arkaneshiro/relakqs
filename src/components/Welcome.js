@@ -7,9 +7,6 @@ export const Welcome = props => {
 
   return (
     <div>
-      <ul>
-        <li>current id: {`${currentUserId}`}</li>
-      </ul>
       {currentUserId ?
         <div>
           <div>
