@@ -2,7 +2,7 @@ const { apiBaseUrl } = require("../config");
 
 // ACTIONS
 export const SET_TOKEN = 'relakqs/authentication/SET_TOKEN';
-export const LOAD_USER = 'relakqs/authentication/LOGOUT';
+export const LOAD_USER = 'relakqs/authentication/LOAD_USER';
 export const LOGOUT = 'relakqs/authentication/LOGOUT';
 
 // ACTION CREATORS
@@ -75,3 +75,18 @@ export const register = (username, email, password, bio) => async (dispatch) => 
     console.error(err);
   }
 };
+
+export const reload = (token) => async (dispatch) => {
+  try {
+    const res = await fetch(`${apiBaseUrl}/user/`, {
+      headers: {
+        "x-access-token": `${token}`,
+      },
+    });
+    if (!res.ok) throw res;
+    const { aviUrl, username, bio } = await res.json();
+    dispatch(loadUser(username, aviUrl, bio))
+  } catch (err) {
+    console.error(err);
+  }
+}

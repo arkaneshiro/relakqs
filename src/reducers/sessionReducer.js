@@ -5,7 +5,7 @@ const defaultSessionState = {
   currentUserId: null,
 }
 
-export default function reducer(state = defaultSessionState, action) {
+export default function reducer(state = {}, action) {
   Object.freeze(state);
   const newState = Object.assign({}, state);
 
