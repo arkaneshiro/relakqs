@@ -27,15 +27,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   messageTitle: {
-    margin: '16px 5px',
+    margin: '20px 15px',
     position: 'absolute'
   },
   expand: {
     transform: 'rotate(270deg)',
     // marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+    transition: 'transform .5s',
   },
   expandOpen: {
     transform: 'rotate(360deg)',

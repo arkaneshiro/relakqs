@@ -1,4 +1,4 @@
-import { } from "../actions/channelActions";
+import { LOAD_CHANNELS, SET_CURRENT_CHANNEL } from "../actions/channelActions";
 
 
 export default function reducer(state = {}, action) {
@@ -6,15 +6,22 @@ export default function reducer(state = {}, action) {
   const newState = Object.assign({}, state);
 
   switch (action.type) {
-    // case SET_TOKEN: {
-    //   return Object.assign(
-    //     newState,
-    //     {
-    //       authToken: action.authToken,
-    //       currentUserId: action.currentUserId,
-    //     }
-    //   )
-    // }
+    case LOAD_CHANNELS: {
+      return Object.assign(
+        newState,
+        {
+          allChannels: action.data,
+        }
+      )
+    }
+    case SET_CURRENT_CHANNEL: {
+      return Object.assign(
+        newState,
+        {
+          currentChannel: action.id,
+        }
+      )
+    }
     default:
       return state;
   }

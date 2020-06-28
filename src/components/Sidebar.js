@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Divider, IconButton, Collapse } from '@material-ui/core';
+import { Avatar, Divider, IconButton, Collapse, List, ListItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { logout, reload } from "../actions/sessionActions";
-import { loadChannels } from "../actions/channelActions";
+import { loadChannels, setCurrentChannel } from "../actions/channelActions";
 import useStyles from '../styles/SidebarStyles'
 
 
@@ -16,13 +16,34 @@ export const Sidebar = props => {
   const currentUserId = useSelector(state => state.session.currentUserId)
   const username = useSelector(state => state.session.username)
   const aviUrl = useSelector(state => state.session.aviUrl)
+  const containers = useSelector(state => state.session.containers)
+  const allChannels = useSelector(state => state.channels.allChannels)
+  const channelId = useSelector(state => state.channels.currentChannel)
   const [expandedC, setExpandedC] = useState(false)
   const [expandedDM, setExpandedDM] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(null)
+
+  const handleSelectchannel = (key) => () => {
+    dispatch(setCurrentChannel(key))
+    setSelectedIndex(`CH${key}`);
+    props.history.push(`/channel/${key}`)
+  }
 
   useEffect(() => {
-    dispatch(reload(authToken));
-    dispatch(loadChannels(authToken));
-  }, [])
+    if (channelId) {
+      setExpandedC(true)
+      setSelectedIndex(`CH${channelId}`)
+    }
+    if (authToken) {
+      dispatch(reload(authToken));
+      dispatch(loadChannels(authToken));
+    }
+    if (!authToken) {
+      setExpandedC(false);
+      setExpandedDM(false);
+      setSelectedIndex(null);
+    }
+  }, [authToken, channelId, dispatch])
 
   return (
     <div className={styles.paper}>
@@ -61,17 +82,34 @@ export const Sidebar = props => {
               </IconButton>
               <IconButton
                 className={styles.expand}
-                onClick={() => { props.history.push('/channels')}}
-                aria-label="add message"
+                onClick={() => { props.history.push('/message'); setSelectedIndex(null) }}
+                aria-label="add channel"
               >
                 <AddIcon />
               </IconButton>
             </div>
           </div>
-          <Collapse in={expandedC} timeout="auto" >
-            <div>
-              epic channel
-            </div>
+          <Collapse in={expandedC} timeout="auto" unmountOnExit>
+            <List>
+              { allChannels ?
+                containers.map( key => {
+                  return (
+                    <ListItem
+                      key={key}
+                      button
+                      selected={selectedIndex === `CH${key}`}
+                      onClick={handleSelectchannel(key)}
+                    >
+                      {`${allChannels[key].title}`}
+                    </ListItem>
+                  )
+                })
+                :
+                <ListItem>
+                  'something else'
+                </ListItem>
+              }
+            </List>
           </Collapse>
           <Divider />
           <div>
@@ -91,6 +129,7 @@ export const Sidebar = props => {
               </IconButton>
               <IconButton
                 className={styles.expand}
+                onClick={() => { props.history.push('/message'); setSelectedIndex(null) }}
                 aria-label="add message"
               >
                 <AddIcon />

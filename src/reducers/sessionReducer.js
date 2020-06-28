@@ -26,6 +26,7 @@ export default function reducer(state = {}, action) {
           username: action.username,
           aviUrl: action.aviUrl,
           bio: action.bio,
+          containers: action.containers,
         }
       )
     }

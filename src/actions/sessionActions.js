@@ -25,12 +25,13 @@ export const setToken = (authToken, currentUserId) => {
   }
 };
 
-export const loadUser = (username, aviUrl, bio) => {
+export const loadUser = (username, aviUrl, bio, containers) => {
   return {
     type: LOAD_USER,
     username,
     aviUrl,
     bio,
+    containers,
   }
 };
 
@@ -51,9 +52,9 @@ export const login = (username, password) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio } = await res.json();
+    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio, containers } = await res.json();
     dispatch(setToken(authToken, id));
-    dispatch(loadUser(currentUsername, aviUrl, bio))
+    dispatch(loadUser(currentUsername, aviUrl, bio, containers))
   } catch (err) {
     console.error(err);
   }
@@ -68,9 +69,9 @@ export const register = (username, email, password, bio) => async (dispatch) => 
       headers: { "Content-Type": "application/json" },
     });
     if (!res.ok) throw res;
-    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio: currentBio } = await res.json();
+    const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio: currentBio, containers } = await res.json();
     dispatch(setToken(authToken, id));
-    dispatch(loadUser(currentUsername, aviUrl, currentBio))
+    dispatch(loadUser(currentUsername, aviUrl, currentBio, containers))
   } catch (err) {
     console.error(err);
   }
@@ -84,8 +85,8 @@ export const reload = (token) => async (dispatch) => {
       },
     });
     if (!res.ok) throw res;
-    const { aviUrl, username, bio } = await res.json();
-    dispatch(loadUser(username, aviUrl, bio))
+    const { aviUrl, username, bio, containers } = await res.json();
+    dispatch(loadUser(username, aviUrl, bio, containers))
   } catch (err) {
     console.error(err);
   }
