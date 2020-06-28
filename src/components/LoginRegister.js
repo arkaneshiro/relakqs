@@ -20,7 +20,6 @@ export const LoginRegister = props => {
 
   const handlesubmit = e => {
     e.preventDefault();
-    console.log('you submitted')
     if (registerMode) {
       dispatch(register(username, email, password, bio))
     } else {

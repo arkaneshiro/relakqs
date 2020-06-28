@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Divider, IconButton, Collapse } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AddIcon from '@material-ui/icons/Add';
 import { logout, reload } from "../actions/sessionActions";
+import { loadChannels } from "../actions/channelActions";
 import useStyles from '../styles/SidebarStyles'
 
 
@@ -19,6 +21,7 @@ export const Sidebar = props => {
 
   useEffect(() => {
     dispatch(reload(authToken));
+    dispatch(loadChannels(authToken));
   }, [])
 
   return (
@@ -41,47 +44,64 @@ export const Sidebar = props => {
           />
           </div>
           <Divider />
-          <div className={styles.messageContainer}>
-            <div className={styles.messageHeader}>
-              Channels
+          <div>
+            <div className={styles.messageTitle}>
+            Channels
             </div>
-            <IconButton
-              className={clsx(styles.expand, {
-                [styles.expandOpen]: expandedC,
-              })}
-              onClick={() => {setExpandedC(!expandedC)}}
-              aria-expanded={expandedC}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-            <Collapse in={expandedC} timeout="auto" >
-              <div>
-                epic channel
-              </div>
-            </Collapse>
+            <div className={styles.messageContainer}>
+              <IconButton
+                className={clsx(styles.expand, {
+                  [styles.expandOpen]: expandedC,
+                })}
+                onClick={() => {setExpandedC(!expandedC)}}
+                aria-expanded={expandedC}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+              <IconButton
+                className={styles.expand}
+                onClick={() => { props.history.push('/channels')}}
+                aria-label="add message"
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
           </div>
+          <Collapse in={expandedC} timeout="auto" >
+            <div>
+              epic channel
+            </div>
+          </Collapse>
           <Divider />
-          <div className={styles.messageContainer}>
-            <div className={styles.messageHeader}>
-              Direct Messages
+          <div>
+            <div className={styles.messageTitle}>
+            Direct Messages
             </div>
-            <IconButton
-              className={clsx(styles.expand, {
-                [styles.expandOpen]: expandedDM,
-              })}
-              onClick={() => {setExpandedDM(!expandedDM)}}
-              aria-expanded={expandedDM}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-            <Collapse in={expandedDM} timeout="auto" >
-              <div>
-                epic message
-              </div>
-            </Collapse>
+            <div className={styles.messageContainer}>
+              <IconButton
+                className={clsx(styles.expand, {
+                  [styles.expandOpen]: expandedDM,
+                })}
+                onClick={() => {setExpandedDM(!expandedDM)}}
+                aria-expanded={expandedDM}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+              <IconButton
+                className={styles.expand}
+                aria-label="add message"
+              >
+                <AddIcon />
+              </IconButton>
+            </div>
           </div>
+          <Collapse in={expandedDM} timeout="auto" >
+            <div>
+              epic message
+            </div>
+          </Collapse>
         </div>
         :
         <div>

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   paper: {
     width: '260px',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -22,15 +23,16 @@ const useStyles = makeStyles((theme) => ({
   messageContainer: {
     padding: '5px',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
-  messageHeader: {
-    marginTop: '15px',
-    position: 'absolute',
+  messageTitle: {
+    margin: '16px 5px',
+    position: 'absolute'
   },
   expand: {
     transform: 'rotate(270deg)',
-    marginLeft: 'auto',
+    // marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
