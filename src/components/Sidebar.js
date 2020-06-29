@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Divider, IconButton, Collapse, List, ListItem } from '@material-ui/core';
+import { Avatar, Divider, IconButton, Collapse, ListItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { logout, reload } from "../actions/sessionActions";
@@ -82,7 +82,7 @@ export const Sidebar = props => {
               </IconButton>
               <IconButton
                 className={styles.expand}
-                onClick={() => { props.history.push('/message'); setSelectedIndex(null) }}
+                onClick={() => { props.history.push('/channels'); setSelectedIndex(null) }}
                 aria-label="add channel"
               >
                 <AddIcon />
@@ -90,18 +90,21 @@ export const Sidebar = props => {
             </div>
           </div>
           <Collapse in={expandedC} timeout="auto" unmountOnExit>
-            <List>
+            <ul className={styles.list}>
               { allChannels ?
                 containers.map( key => {
                   return (
-                    <ListItem
-                      key={key}
-                      button
-                      selected={selectedIndex === `CH${key}`}
-                      onClick={handleSelectchannel(key)}
-                    >
-                      {`${allChannels[key].title}`}
-                    </ListItem>
+                    <>
+                      <Divider />
+                      <ListItem
+                        key={key}
+                        button
+                        selected={selectedIndex === `CH${key}`}
+                        onClick={handleSelectchannel(key)}
+                      >
+                        {`${allChannels[key].title}`}
+                      </ListItem>
+                    </>
                   )
                 })
                 :
@@ -109,7 +112,7 @@ export const Sidebar = props => {
                   'something else'
                 </ListItem>
               }
-            </List>
+            </ul>
           </Collapse>
           <Divider />
           <div>

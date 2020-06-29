@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginRight: '5px',
   },
+  list: {
+    margin: '0px',
+    padding: '0px'
+  },
   messageContainer: {
     padding: '5px',
     display: 'flex',

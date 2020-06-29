@@ -9,6 +9,7 @@ let socket
 export const Channel = props => {
   const styles = useStyles();
   const authToken = useSelector(state => state.session.authToken)
+  const currentUserId = useSelector(state => state.session.currentUserId)
   const allChannels = useSelector(state => state.channels.allChannels)
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
@@ -18,7 +19,7 @@ export const Channel = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    socket.emit('send_message', { channelId, authToken, message })
+    socket.emit('message', { channelId, authToken, message })
     setMessage('')
   }
 
@@ -26,7 +27,7 @@ export const Channel = props => {
     setMessages([])
     socket = io('http://127.0.0.1:5000/')
     socket.emit('join', { channelId, authToken })
-
+    socket.emit('get_history', { channelId, authToken })
     return () => {
       socket.emit('leave', { channelId, authToken });
       socket.off();
@@ -35,9 +36,17 @@ export const Channel = props => {
 
   useEffect(() => {
     socket.on('message', ({msg}) => {
-      setMessages([...messages, msg])
+      setMessages([...messages, msg.message])
     })
   }, [messages])
+
+  useEffect(() => {
+    socket.on('history', ({history, userId}) => {
+      if (currentUserId === `${userId}`) {
+        setMessages([...history, messages])
+      }
+    })
+  }, [messages, currentUserId])
 
   return (
     <>
@@ -73,7 +82,7 @@ export const Channel = props => {
             <Divider />
             <Input
               fullWidth
-              placeholder=" send a message"
+              placeholder=" type a message ..."
               id="message"
               name="message"
               autoComplete="message"
