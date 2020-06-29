@@ -43,7 +43,7 @@ export const LoginRegister = props => {
     <>
       {registerMode ?
         // Register Form
-        <Container component="main" maxWidth="xs">
+        <Container component="main" >
           <CssBaseline />
           <div className={styles.paper}>
             <Typography component="h1" variant="h5">
@@ -122,7 +122,7 @@ export const LoginRegister = props => {
         </Container>
         :
         // Login Form
-        <Container component="main" maxWidth="xs">
+        <Container component="main" >
           <CssBaseline />
           <div className={styles.paper}>
             <Typography component="h1" variant="h5">

@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  list: {
+    padding: '0px',
+  },
   field: {
     position: 'absolute',
     width: '81.9%',

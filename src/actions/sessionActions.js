@@ -3,6 +3,7 @@ const { apiBaseUrl } = require("../config");
 // ACTIONS
 export const SET_TOKEN = 'relakqs/authentication/SET_TOKEN';
 export const LOAD_USER = 'relakqs/authentication/LOAD_USER';
+export const LOAD_CONTAINERS = 'relakqs/authentication/LOAD_CONTAINERS';
 export const LOGOUT = 'relakqs/authentication/LOGOUT';
 
 // ACTION CREATORS
@@ -31,6 +32,13 @@ export const loadUser = (username, aviUrl, bio, containers) => {
     username,
     aviUrl,
     bio,
+    containers,
+  }
+};
+
+export const loadContainers = (containers) => {
+  return {
+    type: LOAD_CONTAINERS,
     containers,
   }
 };

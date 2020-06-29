@@ -46,8 +46,8 @@ export const Sidebar = props => {
   }, [authToken, channelId, dispatch])
 
   return (
-    <div className={styles.paper}>
-      {currentUserId ?
+    // <div className={styles.paper}>
+      currentUserId ?
         <div>
           <div className={styles.header}>
             <div className={styles.subHeader}>
@@ -108,7 +108,7 @@ export const Sidebar = props => {
                 })
                 :
                 <ListItem>
-                  'something else'
+                  loading ...
                 </ListItem>
               }
             </ul>
@@ -131,7 +131,7 @@ export const Sidebar = props => {
               </IconButton>
               <IconButton
                 className={styles.expand}
-                onClick={() => { props.history.push('/message'); setSelectedIndex(null) }}
+                // onClick={() => { props.history.push('/message'); setSelectedIndex(null) }}
                 aria-label="add message"
               >
                 <AddIcon />
@@ -140,16 +140,15 @@ export const Sidebar = props => {
           </div>
           <Collapse in={expandedDM} timeout="auto" >
             <div>
-              epic message
+              Under Construction! *********
             </div>
           </Collapse>
         </div>
         :
         <div>
-          NotLoggedIn
         </div>
-      }
-    </div>
+
+    // </div>
   );
 };
 

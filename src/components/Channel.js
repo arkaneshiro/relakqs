@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Divider, Input } from '@material-ui/core';
+import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
+import Message from './Message.js'
+
 
 let socket
 
@@ -38,7 +40,7 @@ export const Channel = props => {
   useEffect(() => {
     socket.on('message', ({msg}) => {
       if (msg.username) {
-        setMessages([...messages, `${msg.username} - ${msg.message}`])
+        setMessages([...messages, msg])
       } else {
         setMessages([...messages, msg.message])
       }
@@ -49,7 +51,7 @@ export const Channel = props => {
   useEffect(() => {
     socket.on('history', ({history, userId}) => {
       if (currentUserId === `${userId}`) {
-        setMessages([...history, messages])
+        setMessages([...Object.values(history), ...messages])
       }
     })
   }, [messages, currentUserId])
@@ -58,46 +60,58 @@ export const Channel = props => {
   return (
     <>
       <div className={styles.paper}>
-          <div>
-            { allChannels ?
-            `${allChannels[props.match.params.channelId].title}`
-            :
-            'loading...'
-            }
-          </div>
-          <div>
+        <div>
           { allChannels ?
-            `${allChannels[props.match.params.channelId].topic}`
-            :
-            'loading...'
-            }
-          </div>
+          `${allChannels[props.match.params.channelId].title}`
+          :
+          'loading...'
+          }
+        </div>
+        <div>
+          { allChannels ?
+          `${allChannels[props.match.params.channelId].topic}`
+          :
+          'loading...'
+          }
+        </div>
+        <Divider />
+        <List className={styles.list}>
+          {messages.map((msg, idx) => {
+            return (
+              <div key={idx}>
+                {
+                  (typeof(msg) === 'string') ?
+                  <>
+                    <span>
+                      {`${msg}`}
+                    </span>
+                    <Divider/>
+                  </>
+                  :
+                  <Message
+                    message={msg.message}
+                    username={msg.username}
+                    aviUrl={msg.avi_url}
+                    bio={msg.bio}
+                  />
+                }
+              </div>
+            )
+          })}
+        </List>
+        <form className={styles.field} onSubmit={handleSubmit}>
           <Divider />
-          <ul>
-            {messages.map((msg, idx) => {
-              return (
-                <div key={idx}>
-                  <span >
-                    {`${msg}`}
-                  </span>
-                  <br/>
-                </div>
-              )
-            })}
-          </ul>
-          <form className={styles.field} onSubmit={handleSubmit}>
-            <Divider />
-            <Input
-              fullWidth
-              placeholder=" type a message ...  hit enter to send"
-              id="message"
-              name="message"
-              autoComplete="message"
-              value={message}
-              onChange={updateValue(setMessage)}
-            />
-            <input hidden type="submit"/>
-          </form>
+          <Input
+            fullWidth
+            placeholder=" type a message ...  hit enter to send"
+            id="message"
+            name="message"
+            autoComplete="message"
+            value={message}
+            onChange={updateValue(setMessage)}
+          />
+          <input hidden type="submit"/>
+        </form>
       </div>
     </>
   );

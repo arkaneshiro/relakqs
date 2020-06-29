@@ -2,8 +2,8 @@ import { } from "../actions/messageActions";
 
 
 export default function reducer(state = {}, action) {
-  Object.freeze(state);
-  const newState = Object.assign({}, state);
+  // Object.freeze(state);
+  // const newState = Object.assign({}, state);
 
   switch (action.type) {
     // case NEW_MESSAGE: {
