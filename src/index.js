@@ -13,6 +13,9 @@ const preloadedState = {
   },
   channels: {
     currentChannel: window.location.pathname.includes('channel') ? window.location.pathname.split('/')[2] : null,
+  },
+  message: {
+    currentMessages: {}
   }
 }
 

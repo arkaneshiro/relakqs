@@ -94,17 +94,16 @@ export const Sidebar = props => {
               { allChannels ?
                 containers.map( key => {
                   return (
-                    <>
+                    <div key={key}>
                       <Divider />
                       <ListItem
-                        key={key}
                         button
                         selected={selectedIndex === `CH${key}`}
                         onClick={handleSelectchannel(key)}
                       >
                         {`${allChannels[key].title}`}
                       </ListItem>
-                    </>
+                    </div>
                   )
                 })
                 :

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Divider, Input } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
@@ -7,6 +7,7 @@ import io from 'socket.io-client'
 let socket
 
 export const Channel = props => {
+  const dispatch = useDispatch()
   const styles = useStyles();
   const authToken = useSelector(state => state.session.authToken)
   const currentUserId = useSelector(state => state.session.currentUserId)
@@ -36,9 +37,14 @@ export const Channel = props => {
 
   useEffect(() => {
     socket.on('message', ({msg}) => {
-      setMessages([...messages, msg.message])
+      if (msg.username) {
+        setMessages([...messages, `${msg.username} - ${msg.message}`])
+      } else {
+        setMessages([...messages, msg.message])
+      }
     })
-  }, [messages])
+
+  }, [messages, dispatch])
 
   useEffect(() => {
     socket.on('history', ({history, userId}) => {
@@ -47,6 +53,7 @@ export const Channel = props => {
       }
     })
   }, [messages, currentUserId])
+
 
   return (
     <>
@@ -82,7 +89,7 @@ export const Channel = props => {
             <Divider />
             <Input
               fullWidth
-              placeholder=" type a message ..."
+              placeholder=" type a message ...  hit enter to send"
               id="message"
               name="message"
               autoComplete="message"
