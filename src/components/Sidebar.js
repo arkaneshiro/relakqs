@@ -46,7 +46,6 @@ export const Sidebar = props => {
   }, [authToken, channelId, dispatch])
 
   return (
-    // <div className={styles.paper}>
       currentUserId ?
         <div>
           <div className={styles.header}>
