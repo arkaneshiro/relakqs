@@ -1,7 +1,7 @@
 # relakqs
 relaqks is a simple messaging app
 
-Check out relakqs here:
+Check out relakqs here: [relakqs](https://relakqs.herokuapp.com)
 
 Backend for relakqs here: [relakqs-backend](https://github.com/arkaneshiro/relakqs-backend)
 
