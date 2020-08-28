@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     transition: 'font-size 2s',
   },
+  logoEffect: {
+    "&:hover": {
+      transition: 'font-size .1s',
+      fontSize: '200px',
+    },
+  },
   subtitle: {
     display: 'flex',
     justifyContent: 'center'

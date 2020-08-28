@@ -9,6 +9,11 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
     marginRight: '5px'
   },
+  hoverPointer: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
   username: {
     marginRight: '5px',
   },

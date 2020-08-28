@@ -24,7 +24,7 @@ export const Message = props => {
         <Avatar
           alt={props.username + " avi"}
           src={props.aviUrl}
-          className={styles.small + ' hoverPointer'}
+          className={styles.small + ' ' + styles.hoverPointer}
           onClick={openPopover}
         />
         <Typography className={styles.username}>

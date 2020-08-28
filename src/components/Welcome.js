@@ -19,25 +19,25 @@ export const Welcome = props => {
         :
         <div className={styles.login}>
           <div className={styles.logoContainer}>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               R
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               e
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               l
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               a
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               k
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               q
             </span>
-            <span className={styles.logo + ' logoEffect'}>
+            <span className={styles.logo + ' ' + styles.logoEffect}>
               s
             </span>
           </div>
