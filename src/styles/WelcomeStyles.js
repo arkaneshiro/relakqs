@@ -27,8 +27,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   subtitle: {
+    position: 'absolute',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    top: '230px',
+    width: '100vw',
   },
   form: {
     position: 'absolute',

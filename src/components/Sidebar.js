@@ -47,7 +47,7 @@ export const Sidebar = props => {
 
   return (
       currentUserId ?
-        <div>
+        <div className={styles.paper}>
           <div className={styles.header}>
             <div className={styles.subHeader}>
               <Avatar className={styles.avatar} alt={username + " avi"} src={aviUrl}/>

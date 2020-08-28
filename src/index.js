@@ -9,7 +9,7 @@ import configureStore from "./configureStore";
 const preloadedState = {
   session: {
     authToken: localStorage.getItem('relakqs-credentials'),
-    currentUserId: localStorage.getItem('relakqs-user'),
+    currentUserId: parseInt(localStorage.getItem('relakqs-user')),
   },
   channels: {
     currentChannel: window.location.pathname.includes('channel') ? window.location.pathname.split('/')[2] : null,

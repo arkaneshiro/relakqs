@@ -4,6 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
 import Message from './Message.js'
+const { apiBaseUrl } = require("../config");
 
 
 let socket
@@ -28,7 +29,7 @@ export const Channel = props => {
 
   useEffect(() => {
     setMessages([])
-    socket = io('http://127.0.0.1:5000/')
+    socket = io(`${apiBaseUrl}`)
     socket.emit('join', { channelId, authToken })
     socket.emit('get_history', { channelId, authToken })
     return () => {
@@ -50,7 +51,7 @@ export const Channel = props => {
 
   useEffect(() => {
     socket.on('history', ({history, userId}) => {
-      if (currentUserId === `${userId}`) {
+      if (currentUserId === userId) {
         setMessages([...Object.values(history), ...messages])
       }
     })
