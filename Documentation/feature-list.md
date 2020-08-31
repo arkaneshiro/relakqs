@@ -15,7 +15,7 @@
 
     * Direct Messaging
       * users can search for other users by name
-      * users can select multiple users when creating a DM to create 'teams'
+      * users can select multiple users when creating a DM to create 'teams' (stretch)
     * Both
       * users can see when other users in a DM or channel are typing
       * messages update in real time
