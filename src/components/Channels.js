@@ -54,7 +54,7 @@ export const Channels = props => {
             placeholder=" search for a channel ..."
             id="search"
             name="search"
-            autoComplete="search"
+            autoComplete="off"
             value={search}
             onChange={updateSearch}
           />

@@ -56,12 +56,12 @@ export const Sidebar = props => {
               </div>
             </div>
             <input
-            className={styles.logoutButton}
-            onClick={() => { dispatch(logout()) }}
-            type="button"
-            id='logout'
-            value="Log Out"
-          />
+              className={styles.logoutButton}
+              onClick={() => { dispatch(logout()) }}
+              type="button"
+              id='logout'
+              value="Log Out"
+            />
           </div>
           <Divider />
           <div>

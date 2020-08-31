@@ -46,7 +46,7 @@ export const LoginRegister = props => {
             <Typography component="h1" variant="h5">
               Register
             </Typography>
-            <form className={styles.form} onSubmit={handlesubmit} noValidate>
+            <form className={styles.form} onSubmit={handlesubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -125,7 +125,7 @@ export const LoginRegister = props => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form className={styles.form} onSubmit={handlesubmit} noValidate>
+            <form className={styles.form} onSubmit={handlesubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"

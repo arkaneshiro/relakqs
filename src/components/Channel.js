@@ -4,6 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
 import Message from './Message.js'
+import { leaveChannel } from "../actions/channelActions";
 const { apiBaseUrl } = require("../config");
 
 
@@ -74,6 +75,24 @@ export const Channel = props => {
           :
           'loading...'
           }
+          <div>
+            { allChannels && channelId ?
+            currentUserId === allChannels[channelId].adminId ? '<- edit topic button here ->' : ''
+            :
+            ''
+            }
+          </div>
+          <div>
+            <input
+              className={styles.leaveButton}
+              onClick={() => {
+                dispatch(leaveChannel(authToken, channelId));
+              }}
+              type="button"
+              id='leaveChannel'
+              value="Leave Channel"
+            />
+          </div>
         </div>
         <Divider />
         <List className={styles.list}>

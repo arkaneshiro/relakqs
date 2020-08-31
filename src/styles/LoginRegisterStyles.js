@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
   field: {
     marginTop: theme.spacing(.5),
-    '& input:invalid + fieldset': {
-      borderColor: 'red',
-      borderWidth: 2,
-    },
+    // '& input:invalid + fieldset': {
+    //   borderColor: 'red',
+    //   borderWidth: 2,
+    // },
   },
   submit: {
     margin: theme.spacing(0, 0, 1),
