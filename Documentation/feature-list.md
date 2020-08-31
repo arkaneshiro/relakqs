@@ -8,6 +8,7 @@
       * users can search for channels by name and join in
       * all members of channel can see all other members messages
       * users who create a channel can set its name and initial topic
+      * users can leave a channel voluntarily
       * users who create a channel are its 'admin'
       * admins can edit the channel topic
       * admins can remove / block users from channels (stretch)
