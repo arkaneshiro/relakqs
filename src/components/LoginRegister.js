@@ -1,10 +1,7 @@
 import React, { useState, } from "react";
 import { useDispatch } from "react-redux";
 import { Button, CssBaseline, TextField, Link, Typography, Container } from '@material-ui/core';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-// import { makeStyles } from '@material-ui/core/styles';
 import { login, register } from "../actions/sessionActions";
-// import styles from '../styles/LoginRegister.module.css';
 import useStyles from '../styles/LoginRegisterStyles'
 
 export const LoginRegister = props => {
@@ -137,7 +134,7 @@ export const LoginRegister = props => {
                 id="username"
                 label="Username"
                 name="username"
-                autoComplete="username"
+                autoComplete="off"
                 autoFocus
                 value={username}
                 className={styles.field}
@@ -152,7 +149,7 @@ export const LoginRegister = props => {
                 label="Password"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="off"
                 value={password}
                 className={styles.field}
                 onChange={updateValue(setPassword)}
