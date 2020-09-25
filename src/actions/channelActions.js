@@ -67,6 +67,7 @@ export const leaveChannel = (token, channelId, history) => async (dispatch) => {
     if (!res.ok) throw res;
     const {data} = await res.json();
     dispatch(loadContainers(data))
+    dispatch(setCurrentChannel(null))
     history.push('/')
   } catch (err) {
     console.error(err)

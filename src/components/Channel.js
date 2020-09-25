@@ -34,7 +34,6 @@ export const Channel = props => {
     socket.emit('join', { channelId, authToken })
     socket.emit('get_history', { channelId, authToken })
     return () => {
-      debugger
       socket.emit('leave', { channelId, authToken });
       socket.off();
     }
