@@ -1,5 +1,5 @@
 import { LOAD_CHANNELS, SET_CURRENT_CHANNEL } from "../actions/channelActions";
-
+import { LOGOUT } from "../actions/sessionActions";
 
 export default function reducer(state = {}, action) {
   Object.freeze(state);
@@ -21,6 +21,9 @@ export default function reducer(state = {}, action) {
           currentChannel: action.id,
         }
       )
+    }
+    case LOGOUT: {
+      return {}
     }
     default:
       return state;

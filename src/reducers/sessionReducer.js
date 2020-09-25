@@ -39,10 +39,7 @@ export default function reducer(state = {}, action) {
       )
     }
     case LOGOUT: {
-      return Object.assign(
-        newState,
-        defaultSessionState
-      )
+      return defaultSessionState
     }
     default:
       return state;

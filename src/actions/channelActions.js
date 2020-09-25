@@ -25,9 +25,9 @@ export const setCurrentChannel = (id) => {
 export const loadChannels = (token) => async (dispatch) => {
   try {
     const res = await fetch(`${apiBaseUrl}/channel/all`, {
-    headers: {
+      headers: {
         "x-access-token": `${token}`,
-    },
+      },
     });
     if (!res.ok) throw res;
     const {data} = await res.json();
@@ -41,15 +41,15 @@ export const loadChannels = (token) => async (dispatch) => {
 export const joinChannel = (token, channelId) => async (dispatch) => {
   try {
     const res = await fetch(`${apiBaseUrl}/channel/${channelId}`, {
-    method: "POST",
-    headers: {
+      method: "POST",
+      headers: {
         "x-access-token": `${token}`,
       },
     });
     if (!res.ok) throw res;
     const {data} = await res.json();
-    // console.log(data)
     dispatch(loadContainers(data))
+    dispatch(setCurrentChannel(channelId))
   } catch (err) {
     console.error(err);
   }
@@ -65,9 +65,8 @@ export const leaveChannel = (token, channelId) => async (dispatch) => {
       },
     });
     if (!res.ok) throw res;
-    const {data} = await res.json();
-    console.log(data)
-    // todo: call loadchannels
+    // const {data} = await res.json();
+    dispatch(loadChannels(token))
   } catch (err) {
     console.error(err)
   }

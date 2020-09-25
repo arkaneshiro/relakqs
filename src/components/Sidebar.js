@@ -90,7 +90,7 @@ export const Sidebar = props => {
           </div>
           <Collapse in={expandedC} timeout="auto" unmountOnExit>
             <ul className={styles.list}>
-              { allChannels ?
+              { containers && allChannels ?
                 containers.map( key => {
                   return (
                     <div key={key}>
