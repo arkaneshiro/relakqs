@@ -34,6 +34,7 @@ export const Channel = props => {
     socket.emit('join', { channelId, authToken })
     socket.emit('get_history', { channelId, authToken })
     return () => {
+      debugger
       socket.emit('leave', { channelId, authToken });
       socket.off();
     }
@@ -86,7 +87,7 @@ export const Channel = props => {
             <input
               className={styles.leaveButton}
               onClick={() => {
-                dispatch(leaveChannel(authToken, channelId));
+                dispatch(leaveChannel(authToken, channelId, props.history));
               }}
               type="button"
               id='leaveChannel'

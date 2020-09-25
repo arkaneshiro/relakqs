@@ -56,7 +56,7 @@ export const joinChannel = (token, channelId) => async (dispatch) => {
 }
 
 
-export const leaveChannel = (token, channelId) => async (dispatch) => {
+export const leaveChannel = (token, channelId, history) => async (dispatch) => {
   try {
     const res = await fetch(`${apiBaseUrl}/channel/leave/${channelId}`, {
       method: "DELETE",
@@ -65,8 +65,9 @@ export const leaveChannel = (token, channelId) => async (dispatch) => {
       },
     });
     if (!res.ok) throw res;
-    // const {data} = await res.json();
-    dispatch(loadChannels(token))
+    const {data} = await res.json();
+    dispatch(loadContainers(data))
+    history.push('/')
   } catch (err) {
     console.error(err)
   }
