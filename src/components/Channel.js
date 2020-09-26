@@ -47,7 +47,9 @@ export const Channel = props => {
         setMessages([...messages, msg.message])
       }
     })
-
+    socket.on('disconnect', ({msg}) => {
+      console.log(msg)
+    })
   }, [messages, dispatch])
 
   useEffect(() => {

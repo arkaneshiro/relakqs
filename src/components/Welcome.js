@@ -9,14 +9,18 @@ export const Welcome = props => {
   const currentUserId = useSelector(state => state.session.currentUserId)
 
   return (
-    <div className={styles.paper}>
+    // <div className={styles.paper}>
+    <>
       {currentUserId ?
+      <div className={styles.paper}>
         <div>
           <div>
             Welcome Text
           </div>
         </div>
+      </div>
         :
+      <div className={styles.paper2}>
         <div className={styles.login}>
           <div className={styles.logoContainer}>
             <span className={styles.logo + ' ' + styles.logoEffect}>
@@ -48,8 +52,10 @@ export const Welcome = props => {
             <LoginRegister />
           </div>
         </div>
+      </div>
       }
-    </div>
+    </>
+    // </div>
   );
 };
 

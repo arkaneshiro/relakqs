@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: '81.9%',
+    width: '80.4%',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px',
   },
   field: {
+    width: '80.4%',
     position: 'absolute',
-    width: '81.9%',
     bottom: '0px',
   }
 }));

@@ -5,6 +5,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   paper: {
+    width: '80.4%',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  paper2: {
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
