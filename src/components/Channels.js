@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom"
 import { Divider, Input, ListItem, Modal, Backdrop, Fade, Button } from '@material-ui/core';
-import { joinChannel } from "../actions/channelActions";
+import { joinChannel, setCurrentChannel } from "../actions/channelActions";
 import useStyles from '../styles/ChannelsStyles'
 
 const useQuery = () => {
@@ -20,6 +20,9 @@ export const Channels = props => {
   const [open, setOpen] = useState(false);
   const [channelKey, setChannelKey] = useState(1);
 
+  useEffect(() => {
+    dispatch(setCurrentChannel(null))
+  }, [dispatch])
 
   const handleSelectchannel = key => {
     setChannelKey(key)

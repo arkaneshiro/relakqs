@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import Divider from '@material-ui/core/Divider';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { ProtectedRoute } from './Auth'
 import Welcome from "./components/Welcome";
 import Channels from "./components/Channels";
@@ -16,6 +17,7 @@ function App(props) {
 
 
   return (
+    <CssBaseline>
       <div className={styles.paper}>
         <BrowserRouter>
           <Route
@@ -43,6 +45,7 @@ function App(props) {
           </Switch>
         </BrowserRouter>
       </div>
+    </CssBaseline>
   );
 }
 

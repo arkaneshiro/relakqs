@@ -7,7 +7,6 @@ import Message from './Message.js'
 import { leaveChannel } from "../actions/channelActions";
 const { apiBaseUrl } = require("../config");
 
-
 let socket
 
 export const Channel = props => {
@@ -31,111 +30,121 @@ export const Channel = props => {
   useEffect(() => {
     setMessages([])
     socket = io(`${apiBaseUrl}`)
-    socket.emit('join', { channelId, authToken })
-    socket.emit('get_history', { channelId, authToken })
+    if (channelId) {
+      debugger
+      socket.emit('join', { channelId, authToken })
+      socket.emit('get_history', { channelId, authToken })
+    }
     return () => {
-      socket.emit('leave', { channelId, authToken });
-      socket.off();
+      if (channelId) {
+        debugger
+        socket.emit('leave', { channelId, authToken });
+        socket.off();
+      }
     }
   }, [channelId, authToken])
 
   useEffect(() => {
+    // socket.on('message', ({msg}) => {
+    //   if (msg.username) {
+    //     setMessages([...messages, msg])
+    //   } else {
+    //     setMessages([...messages, msg.message])
+    //   }
+    // })
+  }, [messages])
+
+  useEffect(() => {
+    socket.on('history', ({history, userId}) => {
+      debugger
+      if (currentUserId === userId) {
+        setMessages([...Object.values(history), ...messages])
+      }
+    })
     socket.on('message', ({msg}) => {
+      debugger
       if (msg.username) {
         setMessages([...messages, msg])
       } else {
         setMessages([...messages, msg.message])
       }
     })
-    socket.on('disconnect', ({msg}) => {
-      console.log(msg)
-    })
-  }, [messages, dispatch])
-
-  useEffect(() => {
-    socket.on('history', ({history, userId}) => {
-      if (currentUserId === userId) {
-        setMessages([...Object.values(history), ...messages])
-      }
-    })
   }, [messages, currentUserId])
 
 
   return (
-    <>
-      <div className={styles.paper}>
-        <div>
-          { allChannels ?
-          `${allChannels[props.match.params.channelId].title}`
-          :
-          'loading...'
-          }
-        </div>
-        <div>
-          { allChannels ?
-          `${allChannels[props.match.params.channelId].topic}`
-          :
-          'loading...'
-          }
-          <div>
-            { allChannels && channelId ?
-            currentUserId === allChannels[channelId].adminId ? '<- edit topic button here ->' : ''
-            :
-            ''
-            }
-          </div>
-          <div>
-            <input
-              className={styles.leaveButton}
-              onClick={() => {
-                dispatch(leaveChannel(authToken, channelId, props.history));
-              }}
-              type="button"
-              id='leaveChannel'
-              value="Leave Channel"
-            />
-          </div>
-        </div>
-        <Divider />
-        <List className={styles.list}>
-          {messages.map((msg, idx) => {
-            return (
-              <div key={idx}>
-                {
-                  (typeof(msg) === 'string') ?
-                  <>
-                    <span>
-                      {`${msg}`}
-                    </span>
-                    <Divider/>
-                  </>
-                  :
-                  <Message
-                    message={msg.message}
-                    username={msg.username}
-                    aviUrl={msg.avi_url}
-                    bio={msg.bio}
-                  />
-                }
-              </div>
-            )
-          })}
-        </List>
-        <form className={styles.field} onSubmit={handleSubmit}>
-          <Divider />
-          <Input
-            fullWidth
-            placeholder=" type a message ...  hit enter to send"
-            id="message"
-            name="message"
-            autoComplete="message"
-            value={message}
-            onChange={updateValue(setMessage)}
-          />
-          <input hidden type="submit"/>
-        </form>
+    <div className={styles.paper}>
+      <div>
+        { allChannels ?
+        `${allChannels[props.match.params.channelId].title}`
+        :
+        'loading...'
+        }
       </div>
-    </>
+      <div>
+        { allChannels ?
+        `${allChannels[props.match.params.channelId].topic}`
+        :
+        'loading...'
+        }
+        <div>
+          { allChannels && channelId ?
+          currentUserId === allChannels[channelId].adminId ? '<- edit topic button here ->' : ''
+          :
+          ''
+          }
+        </div>
+        <div>
+          <input
+            className={styles.leaveButton}
+            onClick={() => {
+              dispatch(leaveChannel(authToken, channelId, props.history));
+            }}
+            type="button"
+            id='leaveChannel'
+            value="Leave Channel"
+          />
+        </div>
+      </div>
+      <Divider />
+      <List className={styles.list}>
+        {messages.map((msg, idx) => {
+          return (
+            <div key={idx}>
+              {
+                (typeof(msg) === 'string') ?
+                <>
+                  <span>
+                    {`${msg}`}
+                  </span>
+                  <Divider/>
+                </>
+                :
+                <Message
+                  message={msg.message}
+                  username={msg.username}
+                  aviUrl={msg.avi_url}
+                  bio={msg.bio}
+                />
+              }
+            </div>
+          )
+        })}
+      </List>
+      <form className={styles.field} onSubmit={handleSubmit}>
+        <Divider />
+        <Input
+          fullWidth
+          placeholder=" type a message ...  hit enter to send"
+          id="message"
+          name="message"
+          autoComplete="message"
+          value={message}
+          onChange={updateValue(setMessage)}
+        />
+        <input hidden type="submit"/>
+      </form>
+    </div>
   );
 };
 

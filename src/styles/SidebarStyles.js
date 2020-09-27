@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expand: {
     transform: 'rotate(270deg)',
-    // marginLeft: 'auto',
     transition: 'transform .5s',
   },
   expandOpen: {
