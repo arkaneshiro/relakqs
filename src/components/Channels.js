@@ -37,6 +37,7 @@ export const Channels = props => {
       dispatch(joinChannel(authToken, key))
     }
     setOpen(false)
+    dispatch(setCurrentChannel(key))
     props.history.push(`/channel/${key}`)
   }
 
