@@ -6,6 +6,15 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  topicButton: {
+    margin: '9.5px 0px 9.5px 9.5px'
+  },
+  leaveButton: {
+    margin: '9.5px',
+  },
+  buttonContainer: {
+    display: 'flex',
+  },
   list: {
     padding: '0px',
   },

@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  logoutButton: {
+    margin: '0px 9.5px',
+  },
   avatar: {
     marginRight: '5px',
   },

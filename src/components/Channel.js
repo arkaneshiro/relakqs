@@ -45,16 +45,6 @@ export const Channel = props => {
   }, [channelId, authToken])
 
   useEffect(() => {
-    // socket.on('message', ({msg}) => {
-    //   if (msg.username) {
-    //     setMessages([...messages, msg])
-    //   } else {
-    //     setMessages([...messages, msg.message])
-    //   }
-    // })
-  }, [messages])
-
-  useEffect(() => {
     socket.on('history', ({history, userId}) => {
       debugger
       if (currentUserId === userId) {
@@ -74,24 +64,36 @@ export const Channel = props => {
 
   return (
     <div className={styles.paper}>
-      <div>
-        { allChannels ?
-        `${allChannels[props.match.params.channelId].title}`
-        :
-        'loading...'
-        }
+      <div className={styles.titleContainer}>
+        <div>
+          { allChannels ?
+            `${allChannels[props.match.params.channelId].title}`
+          :
+            'loading...'
+          }
+        </div>
+        <div>
+          { allChannels ?
+            `${allChannels[props.match.params.channelId].topic}`
+          :
+            'loading...'
+          }
+        </div>
       </div>
-      <div>
-        { allChannels ?
-        `${allChannels[props.match.params.channelId].topic}`
-        :
-        'loading...'
-        }
+      <div className={styles.buttonContainer}>
         <div>
           { allChannels && channelId ?
-          currentUserId === allChannels[channelId].adminId ? '<- edit topic button here ->' : ''
+            currentUserId === allChannels[channelId].adminId ?
+              <input
+                className={styles.topicButton}
+                type='button'
+                id='changeTopic'
+                value='Edit Topic'
+              />
+            :
+              ''
           :
-          ''
+            ''
           }
         </div>
         <div>
@@ -100,9 +102,9 @@ export const Channel = props => {
             onClick={() => {
               dispatch(leaveChannel(authToken, channelId, props.history));
             }}
-            type="button"
+            type='button'
             id='leaveChannel'
-            value="Leave Channel"
+            value='Leave Channel'
           />
         </div>
       </div>
