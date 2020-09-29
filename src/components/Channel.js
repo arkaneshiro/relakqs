@@ -18,7 +18,6 @@ export const Channel = props => {
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [editOpen, setEditOpen] = useState('none')
 
   const updateValue = cb => e => cb(e.target.value);
 
