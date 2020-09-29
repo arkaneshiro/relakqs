@@ -6,6 +6,16 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  titleContainer: {
+    paddingLeft: '9.5px',
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 'xx-large',
+  },
+  topic: {
+    paddingTop: '12px',
+  },
   topicButton: {
     margin: '9.5px 0px 9.5px 9.5px'
   },

@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    width: '81.9%',
+    width: '80.4%',
     display: 'flex',
     flexDirection: 'column',
   },

@@ -18,6 +18,7 @@ export const Channel = props => {
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [editOpen, setEditOpen] = useState('none')
 
   const updateValue = cb => e => cb(e.target.value);
 
@@ -31,13 +32,13 @@ export const Channel = props => {
     setMessages([])
     socket = io(`${apiBaseUrl}`)
     if (channelId) {
-      debugger
+      // debugger
       socket.emit('join', { channelId, authToken })
       socket.emit('get_history', { channelId, authToken })
     }
     return () => {
       if (channelId) {
-        debugger
+        // debugger
         socket.emit('leave', { channelId, authToken });
         socket.off();
       }
@@ -46,13 +47,13 @@ export const Channel = props => {
 
   useEffect(() => {
     socket.on('history', ({history, userId}) => {
-      debugger
+      // debugger
       if (currentUserId === userId) {
         setMessages([...Object.values(history), ...messages])
       }
     })
     socket.on('message', ({msg}) => {
-      debugger
+      // debugger
       if (msg.username) {
         setMessages([...messages, msg])
       } else {
@@ -65,14 +66,14 @@ export const Channel = props => {
   return (
     <div className={styles.paper}>
       <div className={styles.titleContainer}>
-        <div>
+        <div className={styles.title}>
           { allChannels ?
             `${allChannels[props.match.params.channelId].title}`
           :
             'loading...'
           }
         </div>
-        <div>
+        <div className={styles.topic}>
           { allChannels ?
             `${allChannels[props.match.params.channelId].topic}`
           :
@@ -80,6 +81,14 @@ export const Channel = props => {
           }
         </div>
       </div>
+      <Input
+        className={styles.editTopic}
+        fullWidth
+        placeholder="  enter new channel topic "
+        id="editTopic"
+        name="editTopic"
+      />
+      <Divider />
       <div className={styles.buttonContainer}>
         <div>
           { allChannels && channelId ?
@@ -89,11 +98,12 @@ export const Channel = props => {
                 type='button'
                 id='changeTopic'
                 value='Edit Topic'
+
               />
             :
               ''
           :
-            'loading...'
+            ''
           }
         </div>
         <div>
