@@ -93,7 +93,7 @@ export const Channel = props => {
             :
               ''
           :
-            ''
+            'loading...'
           }
         </div>
         <div>
