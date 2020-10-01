@@ -19,14 +19,6 @@ export const Channel = props => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const updateValue = cb => e => cb(e.target.value);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    socket.emit('message', { channelId, authToken, message })
-    setMessage('')
-  }
-
   useEffect(() => {
     setMessages([])
     socket = io(`${apiBaseUrl}`)
@@ -62,6 +54,33 @@ export const Channel = props => {
   }, [messages, currentUserId])
 
 
+  const updateValue = cb => e => cb(e.target.value);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    socket.emit('message', { channelId, authToken, message })
+    setMessage('')
+  }
+
+  const toggleEdit = e => {
+    const form = document.getElementById('editForm')
+    const topic = document.getElementById('topic')
+    if (form.hidden) {
+      form.hidden = false
+      topic.style.opacity = 0
+    } else {
+      form.hidden = true
+      topic.style.opacity = 100
+    }
+  }
+
+  const handleEditTopic = e => {
+    e.preventDefault();
+    debugger
+    toggleEdit()
+  }
+
+
   return (
     <div className={styles.paper}>
       <div className={styles.titleContainer}>
@@ -74,19 +93,30 @@ export const Channel = props => {
         </div>
         <div className={styles.topic}>
           { allChannels ?
-            `${allChannels[props.match.params.channelId].topic}`
+            <span id='topic' >{`${allChannels[props.match.params.channelId].topic}`}</span>
           :
             'loading...'
           }
         </div>
       </div>
-      <Input
-        className={styles.editTopic}
-        fullWidth
-        placeholder="  enter new channel topic "
-        id="editTopic"
-        name="editTopic"
-      />
+      { allChannels && channelId ?
+        currentUserId === allChannels[channelId].adminId ?
+          <form hidden={true} id="editForm" className={styles.field2} onSubmit={handleEditTopic}>
+            <Divider />
+            <Input
+              className={styles.textInput}
+              fullWidth
+              placeholder={`current topic is: ${allChannels[channelId].topic}`}
+              id="editTopic"
+              name="editTopic"
+            />
+            <input hidden type="submit"/>
+          </form>
+        :
+          ''
+      :
+        ''
+      }
       <Divider />
       <div className={styles.buttonContainer}>
         <div>
@@ -97,7 +127,7 @@ export const Channel = props => {
                 type='button'
                 id='changeTopic'
                 value='Edit Topic'
-
+                onClick={toggleEdit}
               />
             :
               ''
@@ -145,6 +175,7 @@ export const Channel = props => {
       <form className={styles.field} onSubmit={handleSubmit}>
         <Divider />
         <Input
+          className={styles.textInput}
           fullWidth
           placeholder=" type a message ...  hit enter to send"
           id="message"

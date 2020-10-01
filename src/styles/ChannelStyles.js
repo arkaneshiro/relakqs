@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
   topic: {
     paddingTop: '12px',
   },
+  textInput: {
+    background: 'whitesmoke',
+  },
   topicButton: {
     margin: '9.5px 0px 9.5px 9.5px'
   },
@@ -27,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     padding: '0px',
+  },
+  field2: {
+    width: '80.4%',
+    position: 'absolute',
+    top: '45px',
+    backgroundColor: 'solid white'
   },
   field: {
     width: '80.4%',
