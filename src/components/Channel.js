@@ -4,7 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
 import Message from './Message.js'
-import { leaveChannel } from "../actions/channelActions";
+import { leaveChannel, editChannelTopic } from "../actions/channelActions";
 const { apiBaseUrl } = require("../config");
 
 let socket
@@ -64,6 +64,7 @@ export const Channel = props => {
 
   const toggleEdit = e => {
     const form = document.getElementById('editForm')
+    const input = document.getElementById('editTopic')
     const topic = document.getElementById('topic')
     if (form.hidden) {
       form.hidden = false
@@ -71,12 +72,13 @@ export const Channel = props => {
     } else {
       form.hidden = true
       topic.style.opacity = 100
+      input.value = ''
     }
   }
 
   const handleEditTopic = e => {
     e.preventDefault();
-    debugger
+    dispatch(editChannelTopic(authToken, channelId, e.target.querySelector('input').value))
     toggleEdit()
   }
 

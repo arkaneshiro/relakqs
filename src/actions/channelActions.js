@@ -73,3 +73,23 @@ export const leaveChannel = (token, channelId, history) => async (dispatch) => {
     console.error(err)
   }
 }
+
+
+export const editChannelTopic = (token, channelId, topic) => async (dispatch) => {
+  try {
+    const body = JSON.stringify({topic})
+    const res = await fetch(`${apiBaseUrl}/channel/editTopic/${channelId}`, {
+      method: "PUT",
+      body,
+      headers: {
+        "x-access-token": `${token}`,
+        "Content-Type": "application/json"
+      },
+    });
+    if (!res.ok) throw res;
+    const {data} = await res.json();
+    dispatch(loadAllChannels(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
