@@ -108,6 +108,7 @@ export const Channel = props => {
             <Input
               className={styles.textInput}
               fullWidth
+              autoComplete="off"
               placeholder={`current topic is: ${allChannels[channelId].topic}`}
               id="editTopic"
               name="editTopic"
@@ -182,7 +183,7 @@ export const Channel = props => {
           placeholder=" type a message ...  hit enter to send"
           id="message"
           name="message"
-          autoComplete="message"
+          autoComplete="off"
           value={message}
           onChange={updateValue(setMessage)}
         />
