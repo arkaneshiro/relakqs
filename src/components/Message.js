@@ -45,7 +45,6 @@ export const Message = props => {
           <CardMedia
             component='img'
             alt="avatar"
-            height="120"
             image={props.aviUrl}
           />
           <Typography className={styles.text}>{props.username + ' - ' + props.bio}</Typography>
