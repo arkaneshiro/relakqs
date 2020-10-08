@@ -4,7 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
 import Message from './Message.js'
-import { leaveChannel, editChannelTopic } from "../actions/channelActions";
+import { leaveChannel, loadAllChannels } from "../actions/channelActions";
 const { apiBaseUrl } = require("../config");
 
 let socket
@@ -23,13 +23,11 @@ export const Channel = props => {
     setMessages([])
     socket = io(`${apiBaseUrl}`)
     if (channelId) {
-      // debugger
       socket.emit('join', { channelId, authToken })
       socket.emit('get_history', { channelId, authToken })
     }
     return () => {
       if (channelId) {
-        // debugger
         socket.emit('leave', { channelId, authToken });
         socket.off();
       }
@@ -38,20 +36,21 @@ export const Channel = props => {
 
   useEffect(() => {
     socket.on('history', ({history, userId}) => {
-      // debugger
       if (currentUserId === userId) {
         setMessages([...Object.values(history), ...messages])
       }
     })
     socket.on('message', ({msg}) => {
-      // debugger
       if (msg.username) {
         setMessages([...messages, msg])
       } else {
         setMessages([...messages, msg.message])
       }
     })
-  }, [messages, currentUserId])
+    socket.on('new_topic', ({channels}) => {
+      dispatch(loadAllChannels(channels))
+    })
+  }, [messages, currentUserId, dispatch])
 
 
   const updateValue = cb => e => cb(e.target.value);
@@ -60,6 +59,13 @@ export const Channel = props => {
     e.preventDefault();
     socket.emit('message', { channelId, authToken, message })
     setMessage('')
+  }
+
+  const handleEditTopic = e => {
+    e.preventDefault();
+    const newTopic = e.target.querySelector('input').value
+    socket.emit('change_topic', { channelId, authToken, newTopic })
+    toggleEdit()
   }
 
   const toggleEdit = e => {
@@ -74,12 +80,6 @@ export const Channel = props => {
       topic.style.opacity = 100
       input.value = ''
     }
-  }
-
-  const handleEditTopic = e => {
-    e.preventDefault();
-    dispatch(editChannelTopic(authToken, channelId, e.target.querySelector('input').value))
-    toggleEdit()
   }
 
 
