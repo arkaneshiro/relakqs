@@ -47,8 +47,9 @@ export const Channel = props => {
         setMessages([...messages, msg.message])
       }
     })
-    socket.on('new_topic', ({channels}) => {
+    socket.on('new_topic', ({channels, update_msg}) => {
       dispatch(loadAllChannels(channels))
+      setMessages([...messages, update_msg])
     })
   }, [messages, currentUserId, dispatch])
 
