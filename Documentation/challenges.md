@@ -6,3 +6,9 @@
 - ### Process
     - after realizing problem with using fetch API to allow the 'admin's to update channel topic, refactored code to use flask-socket.io
     - this introduced the problem of how to implement authentication with flask-socket.io
+
+
+- ### Challenge
+    - deployed server didn't work as expected, way too slow / inconsistent
+- ### Process
+    - ---- still in progress ----
