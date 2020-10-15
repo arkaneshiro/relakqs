@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   leaveButton: {
     margin: '9.5px',
   },
-  buttonContainer: {
+  buttonAndInfoContainer: {
     display: 'flex',
   },
   list: {

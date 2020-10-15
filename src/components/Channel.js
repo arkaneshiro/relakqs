@@ -4,6 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import io from 'socket.io-client'
 import Message from './Message.js'
+import ChannelUsers from './ChannelUsers.js'
 import { leaveChannel, loadAllChannels } from "../actions/channelActions";
 const { apiBaseUrl } = require("../config");
 
@@ -88,15 +89,15 @@ export const Channel = props => {
     <div className={styles.paper}>
       <div className={styles.titleContainer}>
         <div className={styles.title}>
-          { allChannels ?
-            `${allChannels[props.match.params.channelId].title}`
+          { allChannels && channelId ?
+            `${allChannels[channelId].title}`
           :
             'loading...'
           }
         </div>
         <div className={styles.topic}>
-          { allChannels ?
-            <span id='topic' >{`${allChannels[props.match.params.channelId].topic}`}</span>
+          { allChannels && channelId ?
+            <span id='topic' >{`${allChannels[channelId].topic}`}</span>
           :
             'loading...'
           }
@@ -122,7 +123,7 @@ export const Channel = props => {
         ''
       }
       <Divider />
-      <div className={styles.buttonContainer}>
+      <div className={styles.buttonAndInfoContainer}>
         <div>
           { allChannels && channelId ?
             currentUserId === allChannels[channelId].adminId ?
@@ -149,6 +150,16 @@ export const Channel = props => {
             id='leaveChannel'
             value='Leave Channel'
           />
+        </div>
+        <div>
+          { allChannels && channelId ?
+            <ChannelUsers
+              adminId={allChannels[channelId].adminId}
+              users={allChannels[channelId].users}
+            />
+            :
+              ''
+          }
         </div>
       </div>
       <Divider />
