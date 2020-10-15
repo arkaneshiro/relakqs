@@ -9,9 +9,14 @@ export const ChannelUsers = props => {
     <>
       <span>{`admin: ${props.users[props.adminId].username}`}</span>
       <div>members:
-        {Object.keys(props.users).map((key) => {
+        {Object.keys(props.users).map((key, idx) => {
+          const name = props.users[key].username
           if (parseInt(key) !== props.adminId) {
-            return ` ${props.users[key].username},`
+            if (Object.keys(props.users).length - 1 === idx) {
+              return ' ' + name
+            } else {
+              return ' ' + name + ','
+            }
           } else {
             return ''
           }
