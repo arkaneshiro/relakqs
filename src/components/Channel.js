@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
-import io from 'socket.io-client'
 import Message from './Message.js'
 import ChannelUsers from './ChannelUsers.js'
 import { leaveChannel, loadAllChannels } from "../actions/channelActions";
-const { apiBaseUrl } = require("../config");
+import { loadContainers } from "../actions/sessionActions";
 
-let socket
 
 export const Channel = props => {
   const dispatch = useDispatch()
@@ -22,51 +20,54 @@ export const Channel = props => {
 
   useEffect(() => {
     setMessages([])
-    socket = io(`${apiBaseUrl}`)
     if (channelId) {
-      socket.emit('join', { channelId, authToken })
-      socket.emit('get_history', { channelId, authToken })
+      props.socket.emit('join', { channelId, authToken })
+      props.socket.emit('get_history', { channelId, authToken })
     }
     return () => {
       if (channelId) {
-        socket.emit('leave', { channelId, authToken });
-        socket.off();
+        props.socket.emit('leave', { channelId, authToken });
+        props.socket.off();
       }
     }
-  }, [channelId, authToken])
+  }, [channelId, authToken, props.socket])
 
   useEffect(() => {
-    socket.on('history', ({history, userId}) => {
+    props.socket.on('history', ({history, userId}) => {
       if (currentUserId === userId) {
         setMessages([...Object.values(history), ...messages])
       }
     })
-    socket.on('message', ({msg}) => {
+    props.socket.on('message', ({msg}) => {
       if (msg.username) {
         setMessages([...messages, msg])
       } else {
         setMessages([...messages, msg.message])
       }
     })
-    socket.on('new_topic', ({channels, update_msg}) => {
+    props.socket.on('new_topic', ({channels, update_msg}) => {
       dispatch(loadAllChannels(channels))
       setMessages([...messages, update_msg])
     })
-  }, [messages, currentUserId, dispatch])
+    props.socket.on('new_member', ({channels, containers}) => {
+      dispatch(loadAllChannels(channels))
+      dispatch(loadContainers(containers))
+    })
+  }, [messages, currentUserId, dispatch, props.socket])
 
 
   const updateValue = cb => e => cb(e.target.value);
 
   const handleSubmit = e => {
     e.preventDefault();
-    socket.emit('message', { channelId, authToken, message })
+    props.socket.emit('message', { channelId, authToken, message })
     setMessage('')
   }
 
   const handleEditTopic = e => {
     e.preventDefault();
     const newTopic = e.target.querySelector('input').value
-    socket.emit('change_topic', { channelId, authToken, newTopic })
+    props.socket.emit('change_topic', { channelId, authToken, newTopic })
     toggleEdit()
   }
 
@@ -153,10 +154,10 @@ export const Channel = props => {
         </div>
         <div>
           { allChannels && channelId ?
-            <ChannelUsers
-              adminId={allChannels[channelId].adminId}
-              users={allChannels[channelId].users}
-            />
+              <ChannelUsers
+                adminId={allChannels[channelId].adminId}
+                users={allChannels[channelId].users}
+              />
             :
               ''
           }

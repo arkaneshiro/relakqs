@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
-export const ProtectedRoute = ({ component: Component, path, currentUserId, exact }) => {
+export const ProtectedRoute = ({ component: Component, path, currentUserId, exact, socket }) => {
     return (
       <Route
         path={path}
         exact={exact}
         render={(props) =>
-          currentUserId ? <Component {...props} /> : <Redirect to="/" />
+          currentUserId ? <Component {...props} socket={socket}/> : <Redirect to="/" />
         }
       />
     );

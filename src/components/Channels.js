@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom"
 import { Divider, Input, ListItem, Modal, Backdrop, Fade, Button } from '@material-ui/core';
-import { joinChannel, setCurrentChannel } from "../actions/channelActions";
+import { setCurrentChannel } from "../actions/channelActions";
 import useStyles from '../styles/ChannelsStyles'
 
 const useQuery = () => {
@@ -32,13 +32,13 @@ export const Channels = props => {
     setOpen(bool)
   }
 
-  const handleJoin = key => {
-    if (!containers.includes(parseInt(key))) {
-      dispatch(joinChannel(authToken, key))
+  const handleJoin = channelId => {
+    if (!containers.includes(parseInt(channelId))) {
+      props.socket.emit('join_channel', { channelId, authToken })
     }
     setOpen(false)
-    dispatch(setCurrentChannel(key))
-    props.history.push(`/channel/${key}`)
+    dispatch(setCurrentChannel(channelId))
+    props.history.push(`/channel/${channelId}`)
   }
 
   const updateSearch = e => {
