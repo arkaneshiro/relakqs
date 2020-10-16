@@ -1,4 +1,3 @@
-import { loadContainers } from "./sessionActions"
 const { apiBaseUrl } = require("../config");
 
 // ACTIONS
@@ -21,7 +20,6 @@ export const setCurrentChannel = (id) => {
 };
 
 // THUNKS
-
 export const loadChannels = (token) => async (dispatch) => {
   try {
     const res = await fetch(`${apiBaseUrl}/channel/all`, {
@@ -34,24 +32,5 @@ export const loadChannels = (token) => async (dispatch) => {
     dispatch(loadAllChannels(data))
   } catch (err) {
     console.error(err);
-  }
-}
-
-
-export const leaveChannel = (token, channelId, history) => async (dispatch) => {
-  try {
-    const res = await fetch(`${apiBaseUrl}/channel/leave/${channelId}`, {
-      method: "DELETE",
-      headers: {
-        "x-access-token": `${token}`,
-      },
-    });
-    if (!res.ok) throw res;
-    const {data} = await res.json();
-    dispatch(loadContainers(data))
-    dispatch(setCurrentChannel(null))
-    history.push('/')
-  } catch (err) {
-    console.error(err)
   }
 }

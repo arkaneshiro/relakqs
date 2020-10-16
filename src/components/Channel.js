@@ -4,7 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import Message from './Message.js'
 import ChannelUsers from './ChannelUsers.js'
-import { leaveChannel, loadAllChannels } from "../actions/channelActions";
+import { setCurrentChannel, loadAllChannels } from "../actions/channelActions";
 import { loadContainers } from "../actions/sessionActions";
 
 
@@ -49,11 +49,21 @@ export const Channel = props => {
       dispatch(loadAllChannels(channels))
       setMessages([...messages, update_msg])
     })
-    props.socket.on('new_member', ({channels, containers}) => {
+    props.socket.on('new_member', ({channels, containers, new_member_id}) => {
       dispatch(loadAllChannels(channels))
-      dispatch(loadContainers(containers))
+      if (new_member_id === currentUserId) {
+        dispatch(loadContainers(containers))
+      }
     })
-  }, [messages, currentUserId, dispatch, props.socket])
+    props.socket.on('member_left', ({channels, containers, old_member_id}) => {
+      dispatch(loadAllChannels(channels))
+      if (old_member_id === currentUserId) {
+        dispatch(loadContainers(containers))
+        dispatch(setCurrentChannel(null))
+        props.history.push('/')
+      }
+    })
+  }, [messages, currentUserId, dispatch, props.socket, props.history])
 
 
   const updateValue = cb => e => cb(e.target.value);
@@ -145,7 +155,7 @@ export const Channel = props => {
           <input
             className={styles.leaveButton}
             onClick={() => {
-              dispatch(leaveChannel(authToken, channelId, props.history));
+              props.socket.emit('leave_channel', { authToken, channelId })
             }}
             type='button'
             id='leaveChannel'
