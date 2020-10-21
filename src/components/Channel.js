@@ -152,17 +152,24 @@ export const Channel = props => {
           }
         </div>
         <div>
-          <input
-            className={styles.leaveButton}
-            onClick={() => {
-              props.socket.emit('leave_channel', { authToken, channelId })
-            }}
-            type='button'
-            id='leaveChannel'
-            value='Leave Channel'
-          />
+          { allChannels && channelId ?
+              currentUserId !== allChannels[channelId].adminId ?
+                <input
+                  className={styles.leaveButton}
+                  onClick={() => {
+                    props.socket.emit('leave_channel', { authToken, channelId })
+                  }}
+                  type='button'
+                  id='leaveChannel'
+                  value='Leave Channel'
+                />
+              :
+                ''
+            :
+              ''
+          }
         </div>
-        <div>
+        <div className={styles.channelInfo}>
           { allChannels && channelId ?
               <ChannelUsers
                 adminId={allChannels[channelId].adminId}

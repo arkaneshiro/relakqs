@@ -34,3 +34,24 @@ export const loadChannels = (token) => async (dispatch) => {
     console.error(err);
   }
 }
+
+export const createChannel = (token, title, topic, history) => async (dispatch) => {
+  try {
+    const body = JSON.stringify({ title, topic })
+    const res = await fetch(`${apiBaseUrl}/channel/`, {
+      method: "POST",
+      body,
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": `${token}`,
+      },
+    });
+    if (!res.ok) throw res;
+    const {channels, newChannelId} = await res.json()
+    dispatch(loadAllChannels(channels))
+    dispatch(setCurrentChannel(newChannelId))
+    history.push(`/channel/${newChannelId}`)
+  } catch (err) {
+    console.error(err)
+  }
+}

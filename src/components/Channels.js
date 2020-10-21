@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom"
 import { Divider, Input, ListItem, Modal, Backdrop, Fade, Button } from '@material-ui/core';
-import { setCurrentChannel } from "../actions/channelActions";
+import { setCurrentChannel, createChannel } from "../actions/channelActions";
 import useStyles from '../styles/ChannelsStyles'
 
 const useQuery = () => {
@@ -20,6 +20,8 @@ export const Channels = props => {
   const [openJoin, setOpenJoin] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   const [channelKey, setChannelKey] = useState(1);
+  const [newChannelTitle, setNewChannelTitle] = useState(null);
+  const [newChannelTopic, setNewChannelTopic] = useState('');
 
   useEffect(() => {
     dispatch(setCurrentChannel(null))
@@ -34,15 +36,23 @@ export const Channels = props => {
     props.history.push(`/channel/${channelId}`)
   }
 
-  // const handleCreate = (title, topic, admin) => {
-  //   console.log('wow')
-  // }
+  const handleCreate = () => {
+    if (newChannelTopic) {
+      if (newChannelTitle) {
+        dispatch(createChannel(authToken, newChannelTitle, newChannelTopic, props.history))
+      } else {
+        dispatch(createChannel(authToken, query.get("name"), newChannelTopic, props.history))
+      }
+    } else {
+      console.log('plz provide topic plz')
+    }
+    setOpenCreate(false)
+  }
 
   const handleSubmit = e => {
     e.preventDefault();
     const filteredChannels = Object.keys(allChannels).filter( key => allChannels[key].title.startsWith(`${query.get("name")}`, 1))
     if (filteredChannels.length === 0) {
-      console.log('todo: create new channel')
       setOpenCreate(true)
     } else {
       setChannelKey(parseInt(filteredChannels[0]))
@@ -54,6 +64,14 @@ export const Channels = props => {
     setSearch(e.target.value)
     props.history.push(`/channels/channel?name=${e.target.value}`)
   };
+
+  const updateNewChannelTitle = e => {
+    setNewChannelTitle(e.target.value)
+  }
+
+  const updateNewChannelTopic = e => {
+    setNewChannelTopic(e.target.value)
+  }
 
   return (
     <div className={styles.paper}>
@@ -82,7 +100,10 @@ export const Channels = props => {
                     <Divider />
                     <ListItem
                       button
-                      onClick={() => {setChannelKey(key); setOpenJoin(true)}}
+                      onClick={() => {
+                        setChannelKey(key);
+                        setOpenJoin(true)
+                      }}
                     >
                       {`${allChannels[key].title}`}
                     </ListItem>
@@ -124,7 +145,11 @@ export const Channels = props => {
         <Modal
           className={styles.modal}
           open={openCreate}
-          onClose={() => {setOpenCreate(false)}}
+          onClose={() => {
+            setOpenCreate(false);
+            setNewChannelTitle(null);
+            setNewChannelTopic('');
+          }}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
@@ -136,11 +161,32 @@ export const Channels = props => {
               { allChannels ?
                 <>
                   <div>
-                    Create New Channel "{query.get("name")}"?
+                    Create a New Channel?
                   </div>
-                  <div>
-                    Todo: create channel form
-                  </div>
+                  <Input
+                    fullWidth
+                    placeholder="enter channel title"
+                    id="newChannelTitle"
+                    name="newChannelTitle"
+                    autoComplete="off"
+                    value={newChannelTitle || newChannelTitle === '' ? newChannelTitle : query.get("name")}
+                    onChange={updateNewChannelTitle}
+                  />
+                  <Input
+                    fullWidth
+                    placeholder="enter channel topic"
+                    id="newChannelTopic"
+                    name="newChannelTopic"
+                    autoComplete="off"
+                    value={newChannelTopic}
+                    onChange={updateNewChannelTopic}
+                  />
+                  <Button
+                    className={styles.submitCreateForm}
+                    onClick={handleCreate}
+                  >
+                    Create Channel
+                  </Button>
                 </>
                 :
                 <span></span>

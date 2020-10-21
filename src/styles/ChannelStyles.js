@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
     margin: '9.5px 0px 9.5px 9.5px'
   },
   leaveButton: {
-    margin: '9.5px',
+    margin: '9.5px 0px 9.5px 9.5px',
+  },
+  channelInfo: {
+    marginLeft: '9.5px',
   },
   buttonAndInfoContainer: {
     display: 'flex',

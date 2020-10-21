@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
   },
+  submitCreateForm: {
+    width: '100%',
+  },
 }));
 
 export default useStyles;
