@@ -17,29 +17,38 @@ export const Channels = props => {
   const containers = useSelector(state => state.session.containers)
   const allChannels = useSelector(state => state.channels.allChannels)
   const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
+  const [openJoin, setOpenJoin] = useState(false);
+  const [openCreate, setOpenCreate] = useState(false);
   const [channelKey, setChannelKey] = useState(1);
 
   useEffect(() => {
     dispatch(setCurrentChannel(null))
   }, [dispatch])
 
-  const handleSelectchannel = key => {
-    setChannelKey(key)
-  }
-
-  const handleModal = bool => {
-    setOpen(bool)
-  }
-
   const handleJoin = channelId => {
     if (!containers.includes(parseInt(channelId))) {
       props.socket.emit('join_channel', { channelId, authToken })
     }
-    setOpen(false)
+    setOpenJoin(false)
     dispatch(setCurrentChannel(channelId))
     props.history.push(`/channel/${channelId}`)
   }
+
+  // const handleCreate = (title, topic, admin) => {
+  //   console.log('wow')
+  // }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const filteredChannels = Object.keys(allChannels).filter( key => allChannels[key].title.startsWith(`${query.get("name")}`, 1))
+    if (filteredChannels.length === 0) {
+      console.log('todo: create new channel')
+      setOpenCreate(true)
+    } else {
+      setChannelKey(parseInt(filteredChannels[0]))
+      setOpenJoin(true)
+    }
+  };
 
   const updateSearch = e => {
     setSearch(e.target.value)
@@ -52,7 +61,7 @@ export const Channels = props => {
         Channels
       </div>
       <Divider/>
-      <form className={styles.field} >
+      <form className={styles.field} onSubmit={handleSubmit}>
           <Input
             fullWidth
             placeholder=" search for a channel ..."
@@ -73,14 +82,15 @@ export const Channels = props => {
                     <Divider />
                     <ListItem
                       button
-                      onClick={() => {handleSelectchannel(key); handleModal(true)}}
+                      onClick={() => {setChannelKey(key); setOpenJoin(true)}}
                     >
                       {`${allChannels[key].title}`}
                     </ListItem>
                   </div>
                 )
+              } else {
+                return ''
               }
-              return ''
             })
             :
             <ListItem>
@@ -90,20 +100,48 @@ export const Channels = props => {
         </ul>
         <Modal
           className={styles.modal}
-          open={open}
-          onClose={() => {handleModal(false)}}
+          open={openJoin}
+          onClose={() => {setOpenJoin(false)}}
           closeAfterTransition
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
           }}
         >
-          <Fade in={open}>
+          <Fade in={openJoin}>
             <div className={styles.back}>
               { allChannels ?
                 <Button onClick={() => {handleJoin(channelKey)}}>
                   Join Channel: {allChannels[channelKey].title}
                 </Button>
+                :
+                <span></span>
+              }
+
+            </div>
+          </Fade>
+        </Modal>
+        <Modal
+          className={styles.modal}
+          open={openCreate}
+          onClose={() => {setOpenCreate(false)}}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={openCreate}>
+            <div className={styles.back}>
+              { allChannels ?
+                <>
+                  <div>
+                    Create New Channel "{query.get("name")}"?
+                  </div>
+                  <div>
+                    Todo: create channel form
+                  </div>
+                </>
                 :
                 <span></span>
               }
