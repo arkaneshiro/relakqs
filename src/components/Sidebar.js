@@ -20,7 +20,7 @@ export const Sidebar = props => {
   const allChannels = useSelector(state => state.channels.allChannels)
   const channelId = useSelector(state => state.channels.currentChannel)
   const [expandedC, setExpandedC] = useState(false)
-  const [expandedDM, setExpandedDM] = useState(false)
+  // const [expandedDM, setExpandedDM] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(null)
 
   const handleSelectchannel = (key) => () => {
@@ -40,7 +40,7 @@ export const Sidebar = props => {
     }
     if (!authToken) {
       setExpandedC(false);
-      setExpandedDM(false);
+      // setExpandedDM(false);
       setSelectedIndex(null);
     }
   }, [authToken, channelId, dispatch])
@@ -113,7 +113,7 @@ export const Sidebar = props => {
             </ul>
           </Collapse>
           <Divider />
-          <div>
+          {/* <div>
             <div className={styles.messageTitle}>
             Direct Messages
             </div>
@@ -141,7 +141,7 @@ export const Sidebar = props => {
             <div>
               Under Construction! *********
             </div>
-          </Collapse>
+          </Collapse> */}
         </div>
         :
         <div>
