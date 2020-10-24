@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     margin: '20px 15px',
     position: 'absolute'
   },
+  gettingStarted: {
+    padding: '19px 16px'
+  },
   expand: {
     transform: 'rotate(270deg)',
     transition: 'transform .5s',

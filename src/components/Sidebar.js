@@ -66,7 +66,7 @@ export const Sidebar = props => {
           <Divider />
           <div>
             <div className={styles.messageTitle}>
-            Channels
+              Channels
             </div>
             <div className={styles.messageContainer}>
               <IconButton
@@ -115,7 +115,7 @@ export const Sidebar = props => {
           <Divider />
           {/* <div>
             <div className={styles.messageTitle}>
-            Direct Messages
+              Direct Messages
             </div>
             <div className={styles.messageContainer}>
               <IconButton
@@ -141,7 +141,19 @@ export const Sidebar = props => {
             <div>
               Under Construction! *********
             </div>
-          </Collapse> */}
+          </Collapse>
+          <Divider />*/}
+          <div>
+            <div >
+              <ListItem
+                button
+                className={styles.gettingStarted}
+                onClick={() => {props.history.push('/')}}
+              >
+                Getting Started
+              </ListItem>
+            </div>
+          </div>
         </div>
         :
         <div>
