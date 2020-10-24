@@ -60,7 +60,7 @@ export const Channel = props => {
       if (old_member_id === currentUserId) {
         dispatch(loadContainers(containers))
         dispatch(setCurrentChannel(null))
-        props.history.push('/')
+        props.history.push('/channels')
       }
     })
   }, [messages, currentUserId, dispatch, props.socket, props.history])

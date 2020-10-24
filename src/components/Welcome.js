@@ -1,7 +1,8 @@
 import React, { } from "react";
 import { useSelector } from "react-redux";
-import LoginRegister from './LoginRegister.js'
 import useStyles from '../styles/WelcomeStyles'
+import LoginRegister from './LoginRegister.js'
+import GettingStarted from './GettingStarted.js'
 
 
 export const Welcome = props => {
@@ -9,15 +10,10 @@ export const Welcome = props => {
   const currentUserId = useSelector(state => state.session.currentUserId)
 
   return (
-    // <div className={styles.paper}>
     <>
       {currentUserId ?
       <div className={styles.paper}>
-        <div>
-          <div>
-            Welcome Text
-          </div>
-        </div>
+        <GettingStarted/>
       </div>
         :
       <div className={styles.paper2}>
@@ -55,7 +51,6 @@ export const Welcome = props => {
       </div>
       }
     </>
-    // </div>
   );
 };
 

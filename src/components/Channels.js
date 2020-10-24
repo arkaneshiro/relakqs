@@ -75,7 +75,7 @@ export const Channels = props => {
 
   return (
     <div className={styles.paper}>
-      <div>
+      <div className={styles.title}>
         Channels
       </div>
       <Divider/>

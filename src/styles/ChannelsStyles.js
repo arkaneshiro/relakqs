@@ -6,6 +6,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  title: {
+    fontSize: 'xx-large',
+    fontWeight: 'bold',
+    paddingLeft: '9.5px',
+  },
   list: {
     margin: '0px',
     padding: '0px'
