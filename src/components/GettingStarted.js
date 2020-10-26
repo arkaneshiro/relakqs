@@ -12,6 +12,7 @@ export const GettingStarted = props => {
         Getting Started
       </div>
       <Divider/>
+      ** helpful info here **
     </div>
   )
 };
