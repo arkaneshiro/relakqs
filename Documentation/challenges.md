@@ -8,6 +8,6 @@
 
 
 - ### Challenge
-    - deployed server didn't work as expected, way too slow / inconsistent
+    - deployed server didn't work as expected
 - ### Process
-    - ---- still in progress ----
+    - realized gunicorn servers dont support websockets, installed add on 'eventlet' to allow this functionality

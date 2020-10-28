@@ -26,7 +26,7 @@
 | ------------ | ------- | ---------- | ------- | ------------------------------------ |
 | admin_id     | integer | none       | no      | nullable references: (Users.Id)      |
 | is_channel   | boolean | none       | no      | not null                             |
-| title        | varchar | 20         | no      | not null                             |
+| title        | varchar | 20         | no      | not null, unique                     |
 | topic        | text    | none       | no      | nullable                             |
 
 
