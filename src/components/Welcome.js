@@ -42,7 +42,7 @@ export const Welcome = props => {
             </span>
           </div>
           <span className={styles.subtitle}>
-            a chatting app
+            a chatting app!
           </span>
           <div className={styles.form}>
             <LoginRegister />
