@@ -138,13 +138,26 @@ export const Channel = props => {
         <div>
           { allChannels && channelId ?
             currentUserId === allChannels[channelId].adminId ?
-              <input
-                className={styles.button}
-                type='button'
-                id='changeTopic'
-                value='Edit Topic'
-                onClick={toggleEdit}
-              />
+              <>
+                <input
+                  className={styles.button}
+                  type='button'
+                  id='changeTopic'
+                  value='Edit Topic'
+                  onClick={toggleEdit}
+                />
+                <input
+                  className={styles.button}
+                  onClick={() => {
+                    dispatch(deleteChannel(authToken, channelId, props.history))
+                    dispatch(setCurrentChannel(null))
+                    props.history.push('/channels')
+                  }}
+                  type='button'
+                  id='deleteChannel'
+                  value='Delete Channel'
+                />
+              </>
             :
               ''
           :
@@ -168,19 +181,6 @@ export const Channel = props => {
             :
               ''
           }
-        </div>
-        <div>
-          <input
-            className={styles.button}
-            onClick={() => {
-              dispatch(deleteChannel(authToken, channelId, props.history))
-              dispatch(setCurrentChannel(null))
-              props.history.push('/channels')
-            }}
-            type='button'
-            id='deleteChannel'
-            value='Delete Channel'
-          />
         </div>
         <div className={styles.channelInfo}>
           { allChannels && channelId ?
