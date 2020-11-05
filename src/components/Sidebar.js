@@ -155,11 +155,8 @@ export const Sidebar = props => {
             </div>
           </div>
         </div>
-        :
-        <div>
-        </div>
-
-    // </div>
+      :
+        ''
   );
 };
 
