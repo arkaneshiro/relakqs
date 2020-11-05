@@ -4,7 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import Message from './Message.js'
 import ChannelUsers from './ChannelUsers.js'
-import { setCurrentChannel, loadAllChannels } from "../actions/channelActions";
+import { setCurrentChannel, loadAllChannels, deleteChannel } from "../actions/channelActions";
 import { loadContainers } from "../actions/sessionActions";
 
 
@@ -139,7 +139,7 @@ export const Channel = props => {
           { allChannels && channelId ?
             currentUserId === allChannels[channelId].adminId ?
               <input
-                className={styles.topicButton}
+                className={styles.button}
                 type='button'
                 id='changeTopic'
                 value='Edit Topic'
@@ -155,7 +155,7 @@ export const Channel = props => {
           { allChannels && channelId ?
               currentUserId !== allChannels[channelId].adminId ?
                 <input
-                  className={styles.leaveButton}
+                  className={styles.button}
                   onClick={() => {
                     props.socket.emit('leave_channel', { authToken, channelId })
                   }}
@@ -168,6 +168,19 @@ export const Channel = props => {
             :
               ''
           }
+        </div>
+        <div>
+          <input
+            className={styles.button}
+            onClick={() => {
+              dispatch(deleteChannel(authToken, channelId, props.history))
+              dispatch(setCurrentChannel(null))
+              props.history.push('/channels')
+            }}
+            type='button'
+            id='deleteChannel'
+            value='Delete Channel'
+          />
         </div>
         <div className={styles.channelInfo}>
           { allChannels && channelId ?

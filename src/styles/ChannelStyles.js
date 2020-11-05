@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   textInput: {
     background: 'whitesmoke',
   },
-  topicButton: {
+  button: {
     margin: '9.5px 0px 9.5px 9.5px',
     font: '400 .850rem arial',
     backgroundColor: 'rgb(239, 239, 239)',
