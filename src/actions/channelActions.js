@@ -68,9 +68,6 @@ export const deleteChannel = (token, channelId, history) => async (dispatch) => 
       },
     });
     if (!res.ok) throw res;
-    const {channels} = await res.json()
-    // history.push('/channels')
-    // dispatch(loadAllChannels(channels))
   } catch (err) {
     const {message} = await err.json()
     alert(message)
