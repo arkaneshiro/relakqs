@@ -55,21 +55,3 @@ export const createChannel = (token, title, topic, history) => async (dispatch) 
     console.error(err)
   }
 }
-
-export const deleteChannel = (token, channelId, history) => async (dispatch) => {
-  try {
-    const body = JSON.stringify({ channelId });
-    const res = await fetch(`${apiBaseUrl}/channel/delete`, {
-      method: "POST",
-      body,
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": `${token}`,
-      },
-    });
-    if (!res.ok) throw res;
-  } catch (err) {
-    const {message} = await err.json()
-    alert(message)
-  }
-}

@@ -4,7 +4,7 @@ import { Divider, Input, List } from '@material-ui/core';
 import useStyles from '../styles/ChannelStyles'
 import Message from './Message.js'
 import ChannelUsers from './ChannelUsers.js'
-import { setCurrentChannel, loadAllChannels, deleteChannel } from "../actions/channelActions";
+import { setCurrentChannel, loadAllChannels } from "../actions/channelActions";
 import { loadContainers } from "../actions/sessionActions";
 
 
@@ -62,6 +62,10 @@ export const Channel = props => {
         dispatch(setCurrentChannel(null))
         props.history.push('/channels')
       }
+    })
+    props.socket.on('channel_deleted', () => {
+      dispatch(setCurrentChannel(null))
+      props.history.push('/channels')
     })
   }, [messages, currentUserId, dispatch, props.socket, props.history])
 
@@ -149,9 +153,7 @@ export const Channel = props => {
                 <input
                   className={styles.button}
                   onClick={() => {
-                    dispatch(deleteChannel(authToken, channelId, props.history))
-                    dispatch(setCurrentChannel(null))
-                    props.history.push('/channels')
+                    props.socket.emit('delete_channel', { authToken, channelId })
                   }}
                   type='button'
                   id='deleteChannel'

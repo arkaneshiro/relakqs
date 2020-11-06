@@ -19,7 +19,7 @@ export const Channels = props => {
   const [search, setSearch] = useState('');
   const [openJoin, setOpenJoin] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
-  const [channelKey, setChannelKey] = useState(1);
+  const [channelKey, setChannelKey] = useState(null);
   const [newChannelTitle, setNewChannelTitle] = useState(null);
   const [newChannelTopic, setNewChannelTopic] = useState('');
 
@@ -131,7 +131,7 @@ export const Channels = props => {
         >
           <Fade in={openJoin}>
             <div className={styles.back}>
-              { allChannels ?
+              { allChannels && channelKey ?
                 <Button onClick={() => {handleJoin(channelKey)}}>
                   Join Channel: {allChannels[channelKey].title}
                 </Button>
