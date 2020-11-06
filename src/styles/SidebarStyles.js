@@ -37,6 +37,13 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     marginRight: '5px',
+    cursor: 'pointer',
+    "&:hover": {
+      boxShadow: '0px 0px 2.5px black',
+    },
+  },
+  avatarHover: {
+
   },
   list: {
     margin: '0px',
@@ -61,6 +68,17 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: 'rotate(360deg)',
+  },
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  back: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    outline: 'none',
   },
 }));
 

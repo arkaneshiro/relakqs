@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Divider, IconButton, Collapse, ListItem } from '@material-ui/core';
+import { Avatar, Divider, IconButton, Collapse, ListItem, Modal, Backdrop, Fade, } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { logout, reload } from "../actions/sessionActions";
@@ -22,6 +22,7 @@ export const Sidebar = props => {
   const [expandedC, setExpandedC] = useState(false)
   // const [expandedDM, setExpandedDM] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(null)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   const handleSelectchannel = (key) => () => {
     dispatch(setCurrentChannel(key))
@@ -50,7 +51,14 @@ export const Sidebar = props => {
         <div className={styles.paper}>
           <div className={styles.header}>
             <div className={styles.subHeader}>
-              <Avatar className={styles.avatar} alt={username + " avi"} src={aviUrl}/>
+              <Avatar
+                className={styles.avatar}
+                alt={username + " avi"}
+                src={aviUrl}
+                onClick={() => {
+                  setProfileOpen(true)
+                }}
+              />
               <div>
                 {username}
               </div>
@@ -154,6 +162,22 @@ export const Sidebar = props => {
               </ListItem>
             </div>
           </div>
+          <Modal
+            className={styles.modal}
+            open={profileOpen}
+            onClose={() => {setProfileOpen(false)}}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={profileOpen}>
+              <div className={styles.back}>
+                Hi ::)
+              </div>
+            </Fade>
+          </Modal>
         </div>
       :
         ''
