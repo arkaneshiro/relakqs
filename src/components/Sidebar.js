@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Divider, IconButton, Collapse, ListItem, Modal, Backdrop, Fade, } from '@material-ui/core';
+import { Avatar, Divider, IconButton, Collapse, ListItem, Popover, Card, CardMedia, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { logout, reload } from "../actions/sessionActions";
@@ -16,6 +16,7 @@ export const Sidebar = props => {
   const currentUserId = useSelector(state => state.session.currentUserId)
   const username = useSelector(state => state.session.username)
   const aviUrl = useSelector(state => state.session.aviUrl)
+  const bio = useSelector(state => state.session.bio)
   const containers = useSelector(state => state.session.containers)
   const allChannels = useSelector(state => state.channels.allChannels)
   const channelId = useSelector(state => state.channels.currentChannel)
@@ -23,6 +24,17 @@ export const Sidebar = props => {
   // const [expandedDM, setExpandedDM] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(null)
   const [profileOpen, setProfileOpen] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openCurrentUserPopover = e => {
+    setProfileOpen(true)
+    setAnchorEl(e.currentTarget)
+  }
+
+  const closeCurrentUserPopover = () => {
+    setProfileOpen(false)
+    setAnchorEl(null)
+  }
 
   const handleSelectchannel = (key) => () => {
     dispatch(setCurrentChannel(key))
@@ -55,9 +67,7 @@ export const Sidebar = props => {
                 className={styles.avatar}
                 alt={username + " avi"}
                 src={aviUrl}
-                onClick={() => {
-                  setProfileOpen(true)
-                }}
+                onClick={openCurrentUserPopover}
               />
               <div>
                 {username}
@@ -162,22 +172,21 @@ export const Sidebar = props => {
               </ListItem>
             </div>
           </div>
-          <Modal
-            className={styles.modal}
+          <Popover
             open={profileOpen}
-            onClose={() => {setProfileOpen(false)}}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
+            onClose={closeCurrentUserPopover}
+            anchorEl={anchorEl}
+            anchorOrigin={{vertical: 'center', horizontal: 'center'}}
           >
-            <Fade in={profileOpen}>
-              <div className={styles.back}>
-                Hi ::)
-              </div>
-            </Fade>
-          </Modal>
+            <Card className={styles.cardRoot}>
+              <CardMedia
+                component='img'
+                alt="avatar"
+                image={aviUrl}
+              />
+              <Typography className={styles.text}>{username + ' - ' + bio}</Typography>
+            </Card>
+          </Popover>
         </div>
       :
         ''

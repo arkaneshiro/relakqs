@@ -69,17 +69,15 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: 'rotate(360deg)',
   },
-  modal: {
+  cardRoot: {
+    maxWidth: 200,
+  },
+  text: {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  back: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    outline: 'none',
-  },
+    fontFamily: 'Helvetica',
+
+  }
 }));
 
 export default useStyles;
