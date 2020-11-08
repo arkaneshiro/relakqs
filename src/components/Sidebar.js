@@ -10,21 +10,22 @@ import useStyles from '../styles/SidebarStyles'
 
 
 export const Sidebar = props => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const styles = useStyles();
-  const authToken = useSelector(state => state.session.authToken)
-  const currentUserId = useSelector(state => state.session.currentUserId)
-  const username = useSelector(state => state.session.username)
-  const aviUrl = useSelector(state => state.session.aviUrl)
-  const bio = useSelector(state => state.session.bio)
-  const containers = useSelector(state => state.session.containers)
-  const allChannels = useSelector(state => state.channels.allChannels)
-  const channelId = useSelector(state => state.channels.currentChannel)
-  const [expandedC, setExpandedC] = useState(false)
+  const authToken = useSelector(state => state.session.authToken);
+  const currentUserId = useSelector(state => state.session.currentUserId);
+  const username = useSelector(state => state.session.username);
+  const aviUrl = useSelector(state => state.session.aviUrl);
+  const bio = useSelector(state => state.session.bio);
+  const containers = useSelector(state => state.session.containers);
+  const allChannels = useSelector(state => state.channels.allChannels);
+  const channelId = useSelector(state => state.channels.currentChannel);
+  const [expandedC, setExpandedC] = useState(false);
   // const [expandedDM, setExpandedDM] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(null)
-  const [profileOpen, setProfileOpen] = useState(false)
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [currentAvi, setCurrentAvi] = useState(aviUrl);
 
   const openCurrentUserPopover = e => {
     setProfileOpen(true)
@@ -42,6 +43,28 @@ export const Sidebar = props => {
     props.history.push(`/channel/${key}`)
   }
 
+  const handleNewImage = e => {
+    const newImage = e.target.files[0];
+    let reader = new FileReader();
+    reader.onload = ev => {
+      setCurrentAvi(ev.target.result)
+    }
+    reader.readAsDataURL(newImage);
+  }
+
+  const Update = e => {
+    e.preventDefault()
+    const image = e.currentTarget.querySelector('input').files[0];
+    if (image) {
+      debugger
+      closeCurrentUserPopover()
+      setCurrentAvi(aviUrl);
+    } else {
+      debugger
+      closeCurrentUserPopover()
+    }
+  }
+
   useEffect(() => {
     if (channelId) {
       setExpandedC(true)
@@ -56,7 +79,10 @@ export const Sidebar = props => {
       // setExpandedDM(false);
       setSelectedIndex(null);
     }
-  }, [authToken, channelId, dispatch])
+    if (aviUrl) {
+      setCurrentAvi(aviUrl);
+    }
+  }, [authToken, channelId, aviUrl, dispatch])
 
   return (
       currentUserId ?
@@ -74,7 +100,7 @@ export const Sidebar = props => {
               </div>
             </div>
             <input
-              className={styles.logoutButton}
+              className={styles.button}
               onClick={() => { dispatch(logout()) }}
               type="button"
               id='logout'
@@ -174,17 +200,51 @@ export const Sidebar = props => {
           </div>
           <Popover
             open={profileOpen}
-            onClose={closeCurrentUserPopover}
+            onClose={() => {
+              closeCurrentUserPopover();
+              setCurrentAvi(aviUrl);
+            }}
+            anchorReference="anchorPosition"
+            anchorPosition={{ top: 50, left: 50 }}
             anchorEl={anchorEl}
             anchorOrigin={{vertical: 'center', horizontal: 'center'}}
           >
             <Card className={styles.cardRoot}>
-              <CardMedia
-                component='img'
-                alt="avatar"
-                image={aviUrl}
-              />
-              <Typography className={styles.text}>{username + ' - ' + bio}</Typography>
+              <form onSubmit={Update}>
+              <div
+                className={styles.cardImage}
+                onMouseEnter={e => {e.currentTarget.querySelector(`div`).classList.remove(styles.hidden)}}
+                onMouseLeave={e => {e.currentTarget.querySelector(`div`).classList.add(styles.hidden)}}
+                onClick={e => {e.currentTarget.querySelector('div').querySelector('input').click()}}
+              >
+                <CardMedia
+                  className={styles.previewImg}
+                  component='img'
+                  alt="avatar"
+                  image={currentAvi}
+                />
+                <div className={`${styles.cardHoverShadow} ${styles.hidden}`}>
+                  <span className={styles.cardEditImgTxt}>
+                    Edit Image
+                  </span>
+                  <input
+                    type='file'
+                    hidden='true'
+                    id='newAvi'
+                    onChange={handleNewImage}
+                  />
+                </div>
+              </div>
+              <div >
+                <Typography className={styles.text}>{username + ' - ' + bio}</Typography>
+                <input
+                  className={styles.button}
+                  type='submit'
+                  id='profileUpdate'
+                  value="Update"
+                />
+              </div>
+              </form>
             </Card>
           </Popover>
         </div>

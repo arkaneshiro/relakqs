@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   header: {
-    padding: '5px',
+    padding: '5px 14.5px 5px 5px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -17,8 +17,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  logoutButton: {
-    margin: '0px 9.5px',
+  button: {
     font: '400 .850rem arial',
     backgroundColor: 'rgb(239, 239, 239)',
     border: '1px solid rgb(133, 133, 133)',
@@ -70,13 +69,40 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(360deg)',
   },
   cardRoot: {
-    maxWidth: 200,
+    maxWidth: 250,
+  },
+  cardImage: {
+    height: '250px'
+  },
+  previewImg: {
+    width: '250px'
+  },
+  cardHoverShadow: {
+    position: 'relative',
+    width: '250px',
+    height: '250px',
+    top: '-250px',
+    '&:hover': {
+      boxShadow: 'inset 0 0 10px 0px black',
+      backgroundColor: 'rgba(0, 0, 0, .1)'
+    },
+  },
+  cardEditImgTxt: {
+    position: 'relative',
+    left: '82px',
+    top: '115px',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: 'large',
   },
   text: {
     display: 'flex',
     justifyContent: 'center',
     fontFamily: 'Helvetica',
 
+  },
+  hidden: {
+    display: 'none'
   }
 }));
 
