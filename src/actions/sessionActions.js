@@ -1,9 +1,11 @@
-const { apiBaseUrl } = require("../config");
+const { apiBaseUrl, cloudinaryPreset, cloudinaryUrl } = require("../config");
 
 // ACTIONS
 export const SET_TOKEN = 'relakqs/authentication/SET_TOKEN';
 export const LOAD_USER = 'relakqs/authentication/LOAD_USER';
 export const LOAD_CONTAINERS = 'relakqs/authentication/LOAD_CONTAINERS';
+export const AVI_UPDATER = 'relakqs/authentication/AVI_UPDATER';
+export const BIO_UPDATER = 'relakqs/authentication/BIO_UPDATER';
 export const LOGOUT = 'relakqs/authentication/LOGOUT';
 
 // ACTION CREATORS
@@ -42,6 +44,20 @@ export const loadContainers = (containers) => {
     containers,
   }
 };
+
+export const aviUpdater = (newAvi) => {
+  return {
+    type: AVI_UPDATER,
+    newAvi,
+  }
+}
+
+export const bioUpdater = (newBio) => {
+  return {
+    type: BIO_UPDATER,
+    newBio,
+  }
+}
 
 export const logout = () => {
   removeUser();
@@ -97,5 +113,51 @@ export const reload = (token) => async (dispatch) => {
     dispatch(loadUser(username, aviUrl, bio, containers))
   } catch (err) {
     console.error(err);
+  }
+}
+
+export const updateUserInfo = (token, bio, avi) => async (dispatch) => {
+  try {
+    debugger
+    let imgObj
+    if (avi) {
+      const data = new FormData();
+      data.append('file', avi);
+      data.append('upload_preset', cloudinaryPreset);
+      const res = await fetch(`${cloudinaryUrl}/image/upload`, {
+        method: "POST",
+        body: data,
+      });
+      if (!res.ok) throw res;
+      imgObj = await res.json();
+    }
+    let body
+    if (imgObj) {
+      body = JSON.stringify({bio, aviUrl: imgObj.secure_url})
+      debugger
+    } else {
+      body = JSON.stringify({bio, aviUrl: null})
+      debugger
+    }
+    const res2 = await fetch(`${apiBaseUrl}/user/update`, {
+      method: "POST",
+      body,
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": `${token}`,
+      }
+    });
+    if (!res2.ok) throw res2;
+    const resData = await res2.json();
+    debugger
+    if (resData.aviUrl) {
+      dispatch(aviUpdater(resData.aviUrl))
+    }
+    if (resData.bio) {
+      dispatch(aviUpdater(resData.bio))
+    }
+
+  } catch (err) {
+    console.error(err)
   }
 }

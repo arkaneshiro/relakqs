@@ -1,4 +1,4 @@
-import { SET_TOKEN, LOGOUT, LOAD_USER, LOAD_CONTAINERS } from "../actions/sessionActions";
+import { SET_TOKEN, LOGOUT, LOAD_USER, LOAD_CONTAINERS, AVI_UPDATER, BIO_UPDATER } from "../actions/sessionActions";
 
 const defaultSessionState = {
   authToken: null,
@@ -35,6 +35,22 @@ export default function reducer(state = {}, action) {
         newState,
         {
           containers: action.containers,
+        }
+      )
+    }
+    case AVI_UPDATER: {
+      return Object.assign(
+        newState,
+        {
+          aviUrl: action.newAvi
+        }
+      )
+    }
+    case BIO_UPDATER: {
+      return Object.assign(
+        newState,
+        {
+          bio: action.newBio
         }
       )
     }

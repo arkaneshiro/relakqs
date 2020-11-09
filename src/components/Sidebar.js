@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Avatar, Divider, IconButton, Collapse, ListItem, Popover, Card, CardMedia, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
-import { logout, reload } from "../actions/sessionActions";
+import { logout, reload, updateUserInfo } from "../actions/sessionActions";
 import { loadChannels, setCurrentChannel } from "../actions/channelActions";
 import useStyles from '../styles/SidebarStyles'
 
@@ -55,14 +55,8 @@ export const Sidebar = props => {
   const Update = e => {
     e.preventDefault()
     const image = e.currentTarget.querySelector('input').files[0];
-    if (image) {
-      debugger
-      closeCurrentUserPopover()
-      setCurrentAvi(aviUrl);
-    } else {
-      debugger
-      closeCurrentUserPopover()
-    }
+    dispatch(updateUserInfo(authToken, 'yooooo', image));
+    closeCurrentUserPopover()
   }
 
   useEffect(() => {
@@ -225,11 +219,11 @@ export const Sidebar = props => {
                 />
                 <div className={`${styles.cardHoverShadow} ${styles.hidden}`}>
                   <span className={styles.cardEditImgTxt}>
-                    Edit Image
+                    Edit Avi
                   </span>
                   <input
                     type='file'
-                    hidden='true'
+                    hidden={true}
                     id='newAvi'
                     onChange={handleNewImage}
                   />

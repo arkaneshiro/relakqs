@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cardEditImgTxt: {
     position: 'relative',
-    left: '82px',
+    left: '93px',
     top: '115px',
     color: 'white',
     fontWeight: '500',
