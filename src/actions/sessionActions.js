@@ -118,7 +118,6 @@ export const reload = (token) => async (dispatch) => {
 
 export const updateUserInfo = (token, bio, avi) => async (dispatch) => {
   try {
-    debugger
     let imgObj
     if (avi) {
       const data = new FormData();
@@ -134,10 +133,8 @@ export const updateUserInfo = (token, bio, avi) => async (dispatch) => {
     let body
     if (imgObj) {
       body = JSON.stringify({bio, aviUrl: imgObj.secure_url})
-      debugger
     } else {
       body = JSON.stringify({bio, aviUrl: null})
-      debugger
     }
     const res2 = await fetch(`${apiBaseUrl}/user/update`, {
       method: "POST",
@@ -149,7 +146,6 @@ export const updateUserInfo = (token, bio, avi) => async (dispatch) => {
     });
     if (!res2.ok) throw res2;
     const resData = await res2.json();
-    debugger
     if (resData.aviUrl) {
       dispatch(aviUpdater(resData.aviUrl))
     }

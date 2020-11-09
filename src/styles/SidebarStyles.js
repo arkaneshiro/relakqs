@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     top: '-250px',
     '&:hover': {
       boxShadow: 'inset 0 0 10px 0px black',
-      backgroundColor: 'rgba(0, 0, 0, .1)'
+      backgroundColor: 'rgba(0, 0, 0, .3)'
     },
   },
   cardEditImgTxt: {
@@ -95,11 +95,21 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
     fontSize: 'large',
   },
+  username: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    fontFamily: 'Helvetica',
+    fontWeight: 'bold',
+    fontSize: 'x-large'
+  },
   text: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     fontFamily: 'Helvetica',
-
+    padding: '5px 0px 3px'
+  },
+  textInput: {
+    background: 'whitesmoke',
   },
   hidden: {
     display: 'none'

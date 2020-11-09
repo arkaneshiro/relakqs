@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Divider, IconButton, Collapse, ListItem, Popover, Card, CardMedia, Typography } from '@material-ui/core';
+import { Avatar, Divider, IconButton, Collapse, ListItem, Popover, Card, CardMedia, Typography, Input } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 import { logout, reload, updateUserInfo } from "../actions/sessionActions";
@@ -26,6 +26,8 @@ export const Sidebar = props => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentAvi, setCurrentAvi] = useState(aviUrl);
+  const [editingBio, setEditingBio] = useState(false);
+  const [newBio, setNewBio] = useState(bio);
 
   const openCurrentUserPopover = e => {
     setProfileOpen(true)
@@ -33,8 +35,9 @@ export const Sidebar = props => {
   }
 
   const closeCurrentUserPopover = () => {
-    setProfileOpen(false)
-    setAnchorEl(null)
+    setProfileOpen(false);
+    setAnchorEl(null);
+    setEditingBio(false);
   }
 
   const handleSelectchannel = (key) => () => {
@@ -52,11 +55,22 @@ export const Sidebar = props => {
     reader.readAsDataURL(newImage);
   }
 
+  const toggleEditBio = e => {
+    if (editingBio) {
+      setEditingBio(false);
+      setNewBio(bio)
+    } else {
+      setEditingBio(true);
+    }
+  }
+
   const Update = e => {
     e.preventDefault()
-    const image = e.currentTarget.querySelector('input').files[0];
-    dispatch(updateUserInfo(authToken, 'yooooo', image));
+    const image = e.currentTarget.querySelectorAll('input')[0].files[0];
+    const bio = e.currentTarget.querySelectorAll('input')[1].value;
+    dispatch(updateUserInfo(authToken, bio, image));
     closeCurrentUserPopover()
+
   }
 
   useEffect(() => {
@@ -76,7 +90,10 @@ export const Sidebar = props => {
     if (aviUrl) {
       setCurrentAvi(aviUrl);
     }
-  }, [authToken, channelId, aviUrl, dispatch])
+    if (bio) {
+      setNewBio(bio)
+    }
+  }, [authToken, channelId, aviUrl, bio, dispatch])
 
   return (
       currentUserId ?
@@ -197,6 +214,7 @@ export const Sidebar = props => {
             onClose={() => {
               closeCurrentUserPopover();
               setCurrentAvi(aviUrl);
+              setNewBio(bio);
             }}
             anchorReference="anchorPosition"
             anchorPosition={{ top: 50, left: 50 }}
@@ -230,12 +248,34 @@ export const Sidebar = props => {
                 </div>
               </div>
               <div >
-                <Typography className={styles.text}>{username + ' - ' + bio}</Typography>
+                <Typography className={styles.username}>{username}</Typography>
+                <Divider />
+                <div className={styles.bioAndEdit}>
+                  {editingBio ?
+                    <Input
+                      className={styles.textInput}
+                      fullWidth
+                      autoComplete="off"
+                      placeholder={`current bio is: ${bio}`}
+                      id="editBio"
+                      name="editBio"
+                      value={newBio}
+                      onChange={e => {setNewBio(e.target.value)}}
+                    />
+                  :
+                    <Typography className={styles.text}>{bio}</Typography>
+                  }
+                </div>
+                <input
+                  className={styles.button}
+                  type='button'
+                  id='bioUpdate'
+                  value="Edit Bio"
+                  onClick={toggleEditBio}
+                />
                 <input
                   className={styles.button}
                   type='submit'
-                  id='profileUpdate'
-                  value="Update"
                 />
               </div>
               </form>
