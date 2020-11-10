@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   button: {
     font: '400 .850rem arial',
     backgroundColor: 'rgb(239, 239, 239)',
@@ -34,15 +38,15 @@ const useStyles = makeStyles((theme) => ({
       border: '1px solid rgb(150, 150, 150)',
     },
   },
+  mar: {
+    margin: '9.5px'
+  },
   avatar: {
     marginRight: '5px',
     cursor: 'pointer',
     "&:hover": {
       boxShadow: '0px 0px 2.5px black',
     },
-  },
-  avatarHover: {
-
   },
   list: {
     margin: '0px',

@@ -66,9 +66,8 @@ export const Sidebar = props => {
 
   const Update = e => {
     e.preventDefault()
-    const image = e.currentTarget.querySelectorAll('input')[0].files[0];
-    const bio = e.currentTarget.querySelectorAll('input')[1].value;
-    dispatch(updateUserInfo(authToken, bio, image));
+    const image = e.currentTarget.querySelector('#newAvi').files[0];
+    dispatch(updateUserInfo(authToken, newBio, image));
     closeCurrentUserPopover()
 
   }
@@ -263,20 +262,23 @@ export const Sidebar = props => {
                       onChange={e => {setNewBio(e.target.value)}}
                     />
                   :
-                    <Typography className={styles.text}>{bio}</Typography>
+                    <Typography className={styles.text}>bio: {bio}</Typography>
                   }
                 </div>
-                <input
-                  className={styles.button}
-                  type='button'
-                  id='bioUpdate'
-                  value="Edit Bio"
-                  onClick={toggleEditBio}
-                />
-                <input
-                  className={styles.button}
-                  type='submit'
-                />
+                <Divider />
+                <div className={styles.buttonContainer}>
+                  <input
+                    className={`${styles.button} ${styles.mar}`}
+                    type='button'
+                    id='bioUpdate'
+                    value="Edit Bio"
+                    onClick={toggleEditBio}
+                  />
+                  <input
+                    className={`${styles.button} ${styles.mar}`}
+                    type='submit'
+                  />
+                </div>
               </div>
               </form>
             </Card>
