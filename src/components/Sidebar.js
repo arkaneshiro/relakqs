@@ -69,7 +69,6 @@ export const Sidebar = props => {
     const image = e.currentTarget.querySelector('#newAvi').files[0];
     dispatch(updateUserInfo(authToken, newBio, image));
     closeCurrentUserPopover()
-
   }
 
   useEffect(() => {
@@ -197,17 +196,13 @@ export const Sidebar = props => {
             </div>
           </Collapse>
           <Divider />*/}
-          <div>
-            <div >
-              <ListItem
-                button
-                className={styles.gettingStarted}
-                onClick={() => {props.history.push('/')}}
-              >
-                Getting Started
-              </ListItem>
-            </div>
-          </div>
+          <ListItem
+            button
+            className={styles.gettingStarted}
+            onClick={() => {props.history.push('/')}}
+          >
+            Getting Started
+          </ListItem>
           <Popover
             open={profileOpen}
             onClose={() => {
