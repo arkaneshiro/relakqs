@@ -17,6 +17,7 @@ export const Channel = props => {
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [typingUsers, setTypingUsers] = useState([]);
 
   useEffect(() => {
     setMessages([])
@@ -45,6 +46,14 @@ export const Channel = props => {
         setMessages([...messages, msg.message])
       }
     })
+    props.socket.on('typing', ({typingUser}) => {
+      if (typingUser.isTyping) {
+        setTypingUsers([...typingUsers, typingUser.userId])
+      } else {
+        const filteredTypers = typingUsers.filter(userId => userId !== typingUser.userId);
+        setTypingUsers(filteredTypers)
+      }
+    })
     props.socket.on('new_topic', ({channels, update_msg}) => {
       dispatch(loadAllChannels(channels))
       setMessages([...messages, update_msg])
@@ -67,7 +76,7 @@ export const Channel = props => {
       dispatch(setCurrentChannel(null))
       props.history.push('/channels')
     })
-  }, [messages, currentUserId, dispatch, props.socket, props.history])
+  }, [messages, currentUserId, typingUsers, dispatch, props.socket, props.history])
 
 
   const updateValue = cb => e => cb(e.target.value);
@@ -98,6 +107,12 @@ export const Channel = props => {
       input.value = ''
     }
   }
+
+  // const stopTyping = () => {
+  //   const filteredTypers = typingUsers.filter(userId => userId !== parseInt(currentUserId));
+  //   setTypingUsers(filteredTypers)
+  //   debugger
+  // }
 
 
   return (
@@ -231,6 +246,14 @@ export const Channel = props => {
           autoComplete="off"
           value={message}
           onChange={updateValue(setMessage)}
+          inputProps={{
+            'onFocus': () => {
+              props.socket.emit('typing', { authToken, channelId, 'isTyping': true })
+            },
+            'onBlur': () => {
+              props.socket.emit('typing', { authToken, channelId, 'isTyping': false })
+            }
+          }}
         />
         <input hidden type="submit"/>
       </form>
