@@ -11,3 +11,7 @@
     - deployed server didn't work as expected
 - ### Process
     - realized gunicorn servers dont support websockets, installed add on 'eventlet' to allow this functionality
+
+
+- ### Challenge
+    - as you used a channel more, it became less performant until you switched to using another channel. When you switched back it would be fine again

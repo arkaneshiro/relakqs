@@ -17,7 +17,7 @@ export const Channel = props => {
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-  const [typingUsers, setTypingUsers] = useState([]);
+  const [typingUsers, setTypingUsers] = useState({});
 
   useEffect(() => {
     setMessages([])
@@ -47,11 +47,12 @@ export const Channel = props => {
       }
     })
     props.socket.on('typing', ({typingUser}) => {
+      const typer = typingUser.userId
       if (typingUser.isTyping) {
-        setTypingUsers([...typingUsers, typingUser.userId])
+        setTypingUsers({...typingUsers, typer})
       } else {
-        const filteredTypers = typingUsers.filter(userId => userId !== typingUser.userId);
-        setTypingUsers(filteredTypers)
+        const remove = {typer: undefined}
+        setTypingUsers({...typingUsers, ...remove})
       }
     })
     props.socket.on('new_topic', ({channels, update_msg}) => {
@@ -209,6 +210,20 @@ export const Channel = props => {
               ''
           }
         </div>
+        <div className={styles.channelInfo}>
+          typing:
+          { allChannels && channelId ?
+            Object.values(typingUsers).map(key => {
+              if (allChannels[channelId].users[key]) {
+                return ' ' + allChannels[channelId].users[key].username + ','
+              } else {
+                return ''
+              }
+            })
+          :
+            ''
+          }
+        </div>
       </div>
       <Divider />
       <List className={styles.list}>
@@ -248,10 +263,10 @@ export const Channel = props => {
           onChange={updateValue(setMessage)}
           inputProps={{
             'onFocus': () => {
-              props.socket.emit('typing', { authToken, channelId, 'isTyping': true })
+              props.socket.emit('typingOn', { authToken, channelId })
             },
             'onBlur': () => {
-              props.socket.emit('typing', { authToken, channelId, 'isTyping': false })
+              props.socket.emit('typingOff', { authToken, channelId })
             }
           }}
         />
