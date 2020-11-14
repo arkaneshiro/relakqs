@@ -1,9 +1,8 @@
 # relakqs MVP
 1. users can login / register / authenticate
-2. users can create DMs with other users
+2. users can create and search for channels
 3. users can post and view messages in real time
-4. users can create and search for channels
-5. channels admins can set channel topic
+5. channels admins (by default whoever created the channel) can set channel topic
 
 ## Stretch Goals
 1. Notifications

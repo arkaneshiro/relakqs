@@ -18,24 +18,35 @@
 
 ## Message Containers
 ### DMs
-  * GET /container/DM/all
-    - gets names & ids of all DMs and ids of users who don't have DM's with you
-  * GET /container/DM/:containerId
-    - gets all information for a particular DM including old messages
-  * POST /container/DM
-    - creates a new DM message container
-    - associates users with DM message container
+  * REST API
+    * GET /container/DM/all
+      - gets names & ids of all DMs and ids of users who don't have DM's with you
+    * POST /container/DM
+      - creates a new DM message container
+      - associates users with DM message container
+  * SOCKET.IO
+
+
 ### Channels
-  * GET /container/channel/all
-    - gets names & ids of all channels
-  * GET /container/channel/:containerId
-    - gets all information for a particular channel including old messages
-  * POST /container/channel
-    - creates a new channel message container
-  * POST /container/channel/:containerId
-    - associates a user to a channel
-  * PUT /container/channel/:containerId
-    - checks to be sure user attempting this is admin
-    - updates channel message container's topic
-  * DELETE /container/user/:userId
-    - removes a users association with a channel message container
+  * REST API
+    * GET /container/channel/all
+      - gets names & ids of all channels
+    * POST /container/channel
+      - creates a new channel message container
+  * SOCKET.IO
+    * 'get_history'
+      - gets all information for a particular channel including old messages
+    * 'join_channel'
+      - associates a user to a channel
+    * 'leave_channel'
+      - removes a users association with a channel message container
+    * 'join'
+      - associates socket connection with a socket.io 'room' the room number is the channel id
+    * 'change_topic'
+      - checks to be sure user attempting this is admin
+      - updates channel message container's topic
+    * 'typing_on' & 'typing_off'
+      - sends the typing users id to the room, with a boolean indicating wether they are typing or not
+    * 'delete_channel'
+      - checks to be sure user attempting this is admin
+      - deletes channel container (database model is configured to delete orphaned messages when deleting container)

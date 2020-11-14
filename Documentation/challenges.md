@@ -14,4 +14,4 @@
 
 
 - ### Challenge
-    - as you used a channel more, it became less performant until you switched to using another channel. When you switched back it would be fine again
+    - as you used a channel more, it became less performant until you switched to using another channel. When you switched back it would reset to being snappy
