@@ -7,10 +7,18 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 'xx-large',
+    fontSize: 'xxx-large',
     fontWeight: 'bold',
     paddingLeft: '9.5px',
   },
+  subtitle: {
+    fontSize: 'x-large',
+    fontWeight: 'bold',
+    paddingLeft: '9.5px',
+  },
+  copy: {
+    padding: '0px 0px 9.5px 9.5px',
+  }
 }))
 
 export default useStyles;
