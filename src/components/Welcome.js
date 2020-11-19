@@ -47,6 +47,26 @@ export const Welcome = props => {
           <div className={styles.form}>
             <LoginRegister />
           </div>
+          <div className={styles.linkBar}>
+            <div>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://arkaneshiro.github.io"
+              >
+                Riki Kaneshiro
+              </a>
+            </div>
+            <div>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/arkaneshiro/relakqs"
+              >
+                Github
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       }

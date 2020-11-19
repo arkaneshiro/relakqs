@@ -44,6 +44,13 @@ const useStyles = makeStyles((theme) => ({
     top: '300px',
     width: '50%'
 
+  },
+  linkBar: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'space-around',
+    bottom: '5px',
+    width: '100vw',
   }
 }));
 
