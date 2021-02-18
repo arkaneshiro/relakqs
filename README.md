@@ -26,20 +26,25 @@ Below are the frontend technologies used with some notes regarding their impleme
 Relakqs is a [React](https://reactjs.org/) app, and makes use of [Redux](https://redux.js.org/) for state management, allowing for a snappy user experience. The [react-redux](https://react-redux.js.org/) library is used extensively throughout the app, using the `useSelector` hook to access the Redux store and the `useDispatch` hook to call actions.
 
 #### socket.io
-Socket.io is responsible for most of the logic in relakqs. Any time input from one user needs to instantly change the display for many other users, socket.io was used to implement the feature. It would have been extremely difficult to develop relakqs without using socket.io or a very similar technology.
+[Socket.io](https://socket.io/) responsible for most of the logic in relakqs. Any time input from one user needs to instantly update the page for many other users, socket.io was used to implement the feature. It would have been extremely difficult to develop relakqs without using socket.io or a very similar technology.
 
-When a user in a channel sends a message, socket.io is what delivers it to the backend, not a fetch call. The backend recieves the message and stores it in the postgres database, and then emits the message, also using socket.io, to other users who are in the same room. A similar process happens when an admin of a channel updates the channel topic.
+When a user in a channel sends a message, socket.io is what delivers it to the backend, not a fetch call. The backend recieves the message and stores it in the postgres database, and then emits the message, also using socket.io, to other users who are in the same 'room'. This also happens in the same way when an admin updates the topic of a channel.
 
 #### Material-UI
+Relakqs uses [Material-UI](https://material-ui.com/) for styling. Making custom styling when the default styling needs changes is very easy by using the `makeStyles` hook. Some of Material-UI's pre-styled components like `Divider` and collapsing menus `Collapse` were also used, which allowed me to spend the bulk of my time working on the chatting features.
 
 ## Backend Overview
+Relakqs uses a PostgreSQL database with a Flask server, which communicates with the client using Flask-SocketIO. Below are the backend technologies that make this application possible.
 
 ### Backend Technologies Used
 #### Flask
+Using [Flask](https://flask.palletsprojects.com/en/1.1.x/) allowed me to get the server up and running very quickly with its simple and easy to understand syntax. Making a jwt token validator was very easy with Python's function decorators.
 
 #### Flask-SocketIO
+The most involved portions of the backend of relakqs come from [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). As mentioned above, most of the communication between the client and server happens using socket.io and Flask-SocketIO.
 
 #### PostgreSQL
+Relakqs uses a [PostgreSQL](https://www.postgresql.org/) database, and uses the ORM [SQLAlchemy](https://www.sqlalchemy.org/) to access and update it. Using table relationships with postgres was crucial in querying the database, and making [CRUD](https://developer.mozilla.org/en-US/docs/Glossary/CRUD) operations easy to implement.
 
 ## Conclusion and Further Development
 
