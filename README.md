@@ -11,7 +11,13 @@
 ## Relakqs at a glance
 Relakqs is a simple chatting web application where users can create and join channels to chat in!
 
+##### Sending a message
+![Sending a message](/Documentation/readme-resources/Sending_a_message.gif)
+
 Creators of channels are given admin privledges, which include updating the topic of a channel or deleting a channel.
+
+##### Updating a channel topic
+![Updating a channel topic](/Documentation/readme-resources/Has_science_gone_too_far.gif)
 
 ## Application Architecture
 Relakqs's stack includes [React](https://reactjs.org/), [Redux](https://redux.js.org/), [Node](https://nodejs.org/en/), [Flask](https://flask.palletsprojects.com/en/1.1.x/), and [PostgreSQL](https://www.postgresql.org/). For styling, relakqs uses [Material-UI](https://material-ui.com/).
@@ -32,6 +38,9 @@ When a user in a channel sends a message, socket.io is what delivers it to the b
 
 #### Material-UI
 Relakqs uses [Material-UI](https://material-ui.com/) for styling. Making custom styling when the default styling needs changes is very easy by using the `makeStyles` hook. Some of Material-UI's pre-styled components like `Divider` and collapsing menus `Collapse` were also used, which allowed me to spend the bulk of my time working on the chatting features.
+
+##### Relakqs logo animation
+![Relakqs logo animation](/Documentation/readme-resources/Logo_Animation.gif)
 
 ## Backend Overview
 Relakqs uses a PostgreSQL database with a Flask server, which communicates with the client using Flask-SocketIO. Below are the backend technologies that make this application possible.
