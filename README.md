@@ -41,14 +41,15 @@ Relakqs uses a PostgreSQL database with a Flask server, which communicates with 
 Using [Flask](https://flask.palletsprojects.com/en/1.1.x/) allowed me to get the server up and running very quickly with its simple and easy to understand syntax. Making a jwt token validator was very easy with Python's function decorators.
 
 #### Flask-SocketIO
-The most involved portions of the backend of relakqs come from [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). As mentioned above, most of the communication between the client and server happens using socket.io and Flask-SocketIO.
+The most involved portions of the backend of relakqs come from [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). As mentioned above, most of the communication between the client and server happens using socket.io and Flask-SocketIO. The use of Flask-SocketIO's custom event handler's is what allows relakqs to handle multiple types of events instantly.
 
 #### PostgreSQL
 Relakqs uses a [PostgreSQL](https://www.postgresql.org/) database, and uses the ORM [SQLAlchemy](https://www.sqlalchemy.org/) to access and update it. Using table relationships with postgres was crucial in querying the database, and making [CRUD](https://developer.mozilla.org/en-US/docs/Glossary/CRUD) operations easy to implement.
 
 ## Conclusion and Further Development
+Developing Relakqs was one of the most exciting full stack solo projects I have worked on! The use of socket.io with this application's architecture may be somewhat novel, as it was difficult to find examples of others doing the same. This made it a really fun challenge to piece together how to make relakqs work using a variety of examples. It was this project that made me really love working with Flask and socket.io.
 
-**Further Development:**
+**Further Development:** I have a somewhat exhaustive list of features and some ideas for features in the futures found [Here](https://github.com/arkaneshiro/relakqs/blob/master/Documentation/feature-list.md)!
 
 
 
