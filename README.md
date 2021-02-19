@@ -38,6 +38,26 @@ Relakqs is a [React](https://reactjs.org/) app, and makes use of [Redux](https:/
 
 When a user in a channel sends a message, socket.io is what delivers it to the backend, not a fetch call. The backend recieves the message and stores it in the postgres database, and then emits the message, also using socket.io, to other users who are in the same 'room'. This also happens in the same way when an admin updates the topic of a channel.
 
+##### socket.io message event handler in Channel component (edited for brevity)
+``` js
+  useEffect(() => {
+    // ...
+    // more handlers above
+
+    props.socket.on('message', ({msg}) => {
+      if (msg.username) {
+        setMessages([...messages, msg])
+      } else {
+        setMessages([...messages, msg.message])
+      }
+    })
+
+    //...
+    // more handlers below
+
+  }, [messages, currentUserId, typingUsers, dispatch, props.socket, props.history])
+```
+
 #### Material-UI
 Relakqs uses [Material-UI](https://material-ui.com/) for styling. Making custom styling when the default styling needs changes is very easy by using the `makeStyles` hook. Some of Material-UI's pre-styled components like `Divider` and collapsing menus `Collapse` were also used, which allowed me to spend the bulk of my time working on the chatting features.
 
@@ -53,6 +73,37 @@ Using [Flask](https://flask.palletsprojects.com/en/1.1.x/) allowed me to get the
 
 #### Flask-SocketIO
 The most involved portions of the backend of relakqs come from [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). As mentioned above, most of the communication between the client and server happens using socket.io and Flask-SocketIO. The use of Flask-SocketIO's custom event handler's is what allows relakqs to handle multiple types of events instantly.
+
+##### Flask-SocketIO message event handler
+```python
+@socket.on('message')
+def message_sender(data):
+    tokenObj = jwt.decode(data['authToken'], Configuration.SECRET_KEY)
+    sender = User.query.filter_by(id=tokenObj['user_id']).first()
+    message = data['message']
+
+    new_msg = Message(
+        messager=sender,
+        container_id=data['channelId'],
+        message=message,
+    )
+
+    db.session.add(new_msg)
+    db.session.commit()
+
+    room = int(data['channelId'])
+    send({'msg': {'message': message,
+                  'messageId': new_msg.id,
+                  'userId': sender.id,
+                  'username': sender.username,
+                  'avi_url': sender.avi_url,
+                  'bio': sender.bio,
+                  }
+          },
+         broadcast=True,
+         room=room
+         )
+```
 
 #### PostgreSQL
 Relakqs uses a [PostgreSQL](https://www.postgresql.org/) database, and uses the ORM [SQLAlchemy](https://www.sqlalchemy.org/) to access and update it. Using table relationships with postgres was crucial in querying the database, and making [CRUD](https://developer.mozilla.org/en-US/docs/Glossary/CRUD) operations easy to implement.
