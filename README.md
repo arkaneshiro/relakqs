@@ -24,6 +24,8 @@ Relakqs's stack includes [React](https://reactjs.org/), [Redux](https://redux.js
 
 Messaging, and updates that admins make to a channel topic are all handled using [socket.io](https://socket.io/) and it's Flask-compatible version, [Flask-SocketIO](https://flask-socketio.readthedocs.io/en/latest/). This not only enables real-time messaging, but allows for all users currently in a channel to instantly see the updated channel topic when an admin updates it.
 
+![Relakqs application architecture](/Documentation/readme-resources/Relakqs_Application_Architecture.png)
+
 ## Frontend Overview
 Below are the frontend technologies used with some notes regarding their implementation.
 
