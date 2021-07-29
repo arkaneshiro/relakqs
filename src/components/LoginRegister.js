@@ -1,11 +1,12 @@
 import React, { useState, } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, CssBaseline, TextField, Link, Typography, Container } from '@material-ui/core';
 import { login, register, clearLoginError } from "../actions/sessionActions";
 import useStyles from '../styles/LoginRegisterStyles'
 
 export const LoginRegister = props => {
   const dispatch = useDispatch()
+  const sessionErrorMessage = useSelector(state => state.session.sessionErrorMessage)
   const styles = useStyles();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -124,8 +125,13 @@ export const LoginRegister = props => {
           <CssBaseline />
           <div className={styles.paper}>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign In
             </Typography>
+            <div>{sessionErrorMessage ?
+            sessionErrorMessage :
+            ""
+            }
+            </div>
             <form className={styles.form} onSubmit={handlesubmit}>
               <TextField
                 variant="outlined"
