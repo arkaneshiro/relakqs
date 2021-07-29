@@ -1,7 +1,7 @@
 import React, { useState, } from "react";
 import { useDispatch } from "react-redux";
 import { Button, CssBaseline, TextField, Link, Typography, Container } from '@material-ui/core';
-import { login, register } from "../actions/sessionActions";
+import { login, register, clearLoginError } from "../actions/sessionActions";
 import useStyles from '../styles/LoginRegisterStyles'
 
 export const LoginRegister = props => {
@@ -34,6 +34,7 @@ export const LoginRegister = props => {
     setEmail('')
     setPassword('')
     setBio('')
+    dispatch(clearLoginError())
   }
 
   return (

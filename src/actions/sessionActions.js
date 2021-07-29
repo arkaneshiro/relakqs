@@ -7,6 +7,9 @@ export const LOAD_CONTAINERS = 'relakqs/authentication/LOAD_CONTAINERS';
 export const AVI_UPDATER = 'relakqs/authentication/AVI_UPDATER';
 export const BIO_UPDATER = 'relakqs/authentication/BIO_UPDATER';
 export const LOGOUT = 'relakqs/authentication/LOGOUT';
+export const SET_LOGIN_ERROR = 'relakqs/authentication/SET_LOGIN_ERROR';
+export const CLEAR_LOGIN_ERROR = 'relakqs/authentication/CLEAR_LOGIN_ERROR';
+
 
 // ACTION CREATORS
 export const persistUser = (token, id) => {
@@ -66,6 +69,19 @@ export const logout = () => {
   }
 };
 
+export const setLoginError = (message) => {
+  return {
+    type: SET_LOGIN_ERROR,
+    sessionErrorMessage: message,
+  }
+};
+
+export const clearLoginError = () => {
+  return {
+    type: CLEAR_LOGIN_ERROR,
+  }
+};
+
 // THUNKS
 export const login = (username, password) => async (dispatch) => {
   try {
@@ -75,6 +91,10 @@ export const login = (username, password) => async (dispatch) => {
       body,
       headers: { "Content-Type": "application/json" },
     });
+    if (res.status === 401) {
+      const { message } = await res.json();
+      dispatch(setLoginError(message))
+    }
     if (!res.ok) throw res;
     const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio, containers } = await res.json();
     dispatch(setToken(authToken, id));

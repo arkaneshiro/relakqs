@@ -1,8 +1,9 @@
-import { SET_TOKEN, LOGOUT, LOAD_USER, LOAD_CONTAINERS, AVI_UPDATER, BIO_UPDATER } from "../actions/sessionActions";
+import { SET_TOKEN, LOGOUT, LOAD_USER, LOAD_CONTAINERS, AVI_UPDATER, BIO_UPDATER, SET_LOGIN_ERROR, CLEAR_LOGIN_ERROR } from "../actions/sessionActions";
 
 const defaultSessionState = {
   authToken: null,
   currentUserId: null,
+  sessionErrorMessage: null,
 }
 
 export default function reducer(state = {}, action) {
@@ -51,6 +52,22 @@ export default function reducer(state = {}, action) {
         newState,
         {
           bio: action.newBio
+        }
+      )
+    }
+    case SET_LOGIN_ERROR: {
+      return Object.assign(
+        newState,
+        {
+          sessionErrorMessage: action.sessionErrorMessage,
+        }
+      )
+    }
+    case CLEAR_LOGIN_ERROR: {
+      return Object.assign(
+        newState,
+        {
+          sessionErrorMessage: null,
         }
       )
     }
