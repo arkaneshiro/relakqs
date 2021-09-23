@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   form_change: {
     marginTop: theme.spacing(2)
+  },
+  error_message: {
+    color: '#ff1717',
   }
 }));
 

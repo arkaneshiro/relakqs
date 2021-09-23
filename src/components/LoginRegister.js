@@ -127,10 +127,8 @@ export const LoginRegister = props => {
             <Typography component="h1" variant="h5">
               Sign In
             </Typography>
-            <div>{sessionErrorMessage ?
-            sessionErrorMessage :
-            ""
-            }
+            <div className={styles.error_message} >
+              {sessionErrorMessage ? sessionErrorMessage : ""}
             </div>
             <form className={styles.form} onSubmit={handlesubmit}>
               <TextField
