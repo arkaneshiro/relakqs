@@ -112,6 +112,10 @@ export const register = (username, email, password, bio) => async (dispatch) => 
       body,
       headers: { "Content-Type": "application/json" },
     });
+    if (res.status === 403) {
+      const { message } = await res.json();
+      dispatch(setLoginError(message))
+    }
     if (!res.ok) throw res;
     const { authToken, currentUserId: id, username: currentUsername, aviUrl, bio: currentBio, containers } = await res.json();
     dispatch(setToken(authToken, id));
