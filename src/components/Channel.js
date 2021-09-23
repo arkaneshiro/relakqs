@@ -1,3 +1,4 @@
+import io from 'socket.io-client'
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Divider, Input, List } from '@material-ui/core';
@@ -7,12 +8,16 @@ import ChannelUsers from './ChannelUsers.js'
 import { setCurrentChannel, loadAllChannels } from "../actions/channelActions";
 import { loadContainers } from "../actions/sessionActions";
 
+const { apiBaseUrl } = require("../config");
+const socket = io(`${apiBaseUrl}`)
+
 
 export const Channel = props => {
   const dispatch = useDispatch()
   const styles = useStyles();
   const authToken = useSelector(state => state.session.authToken)
   const currentUserId = useSelector(state => state.session.currentUserId)
+  const containers = useSelector(state => state.session.containers)
   const allChannels = useSelector(state => state.channels.allChannels)
   const channelId = useSelector(state => state.channels.currentChannel)
   const [message, setMessage] = useState('');
@@ -20,33 +25,41 @@ export const Channel = props => {
   const [typingUsers, setTypingUsers] = useState({});
 
   useEffect(() => {
+    if (channelId && containers) {
+      if (!containers.includes(parseInt(channelId))) {
+        socket.emit('join_channel', { channelId, authToken })
+      }
+    }
+  })
+
+  useEffect(() => {
     setMessages([])
     if (channelId) {
-      props.socket.emit('join', { channelId, authToken })
-      props.socket.emit('get_history', { channelId, authToken })
+      socket.emit('join', { channelId, authToken })
+      socket.emit('get_history', { channelId, authToken })
     }
     return () => {
       if (channelId) {
-        props.socket.emit('leave', { channelId, authToken });
-        props.socket.off();
+        socket.emit('leave', { channelId, authToken });
+        socket.off()
       }
     }
   }, [channelId, authToken, props.socket])
 
   useEffect(() => {
-    props.socket.on('history', ({history, userId}) => {
+    socket.on('history', ({history, userId}) => {
       if (currentUserId === userId) {
         setMessages([...Object.values(history), ...messages])
       }
     })
-    props.socket.on('message', ({msg}) => {
+    socket.on('message', ({msg}) => {
       if (msg.username) {
         setMessages([...messages, msg])
       } else {
         setMessages([...messages, msg.message])
       }
     })
-    props.socket.on('typing', ({typingUser}) => {
+    socket.on('typing', ({typingUser}) => {
       const typer = typingUser.userId
       if (typingUser.isTyping) {
         setTypingUsers({...typingUsers, typer})
@@ -55,17 +68,17 @@ export const Channel = props => {
         setTypingUsers({...typingUsers, ...remove})
       }
     })
-    props.socket.on('new_topic', ({channels, update_msg}) => {
+    socket.on('new_topic', ({channels, update_msg}) => {
       dispatch(loadAllChannels(channels))
       setMessages([...messages, update_msg])
     })
-    props.socket.on('new_member', ({channels, containers, new_member_id}) => {
+    socket.on('new_member', ({channels, containers, new_member_id}) => {
       dispatch(loadAllChannels(channels))
       if (new_member_id === currentUserId) {
         dispatch(loadContainers(containers))
       }
     })
-    props.socket.on('member_left', ({channels, containers, old_member_id}) => {
+    socket.on('member_left', ({channels, containers, old_member_id}) => {
       dispatch(loadAllChannels(channels))
       if (old_member_id === currentUserId) {
         dispatch(loadContainers(containers))
@@ -73,7 +86,7 @@ export const Channel = props => {
         props.history.push('/channels')
       }
     })
-    props.socket.on('channel_deleted', () => {
+    socket.on('channel_deleted', () => {
       dispatch(setCurrentChannel(null))
       props.history.push('/channels')
     })
@@ -84,14 +97,14 @@ export const Channel = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    props.socket.emit('message', { channelId, authToken, message })
+    socket.emit('message', { channelId, authToken, message })
     setMessage('')
   }
 
   const handleEditTopic = e => {
     e.preventDefault();
     const newTopic = e.target.querySelector('input').value
-    props.socket.emit('change_topic', { channelId, authToken, newTopic })
+    socket.emit('change_topic', { channelId, authToken, newTopic })
     toggleEdit()
   }
 
@@ -169,7 +182,7 @@ export const Channel = props => {
                 <input
                   className={styles.button}
                   onClick={() => {
-                    props.socket.emit('delete_channel', { authToken, channelId })
+                    socket.emit('delete_channel', { authToken, channelId })
                   }}
                   type='button'
                   id='deleteChannel'
@@ -188,7 +201,7 @@ export const Channel = props => {
                 <input
                   className={styles.button}
                   onClick={() => {
-                    props.socket.emit('leave_channel', { authToken, channelId })
+                    socket.emit('leave_channel', { authToken, channelId })
                   }}
                   type='button'
                   id='leaveChannel'
@@ -263,10 +276,10 @@ export const Channel = props => {
           onChange={updateValue(setMessage)}
           inputProps={{
             'onFocus': () => {
-              props.socket.emit('typingOn', { authToken, channelId })
+              socket.emit('typingOn', { authToken, channelId })
             },
             'onBlur': () => {
-              props.socket.emit('typingOff', { authToken, channelId })
+              socket.emit('typingOff', { authToken, channelId })
             }
           }}
         />

@@ -14,7 +14,6 @@ export const Channels = props => {
   const styles = useStyles();
   const query = useQuery();
   const authToken = useSelector(state => state.session.authToken)
-  const containers = useSelector(state => state.session.containers)
   const allChannels = useSelector(state => state.channels.allChannels)
   const [search, setSearch] = useState('');
   const [openJoin, setOpenJoin] = useState(false);
@@ -28,9 +27,6 @@ export const Channels = props => {
   }, [dispatch])
 
   const handleJoin = channelId => {
-    if (!containers.includes(parseInt(channelId))) {
-      props.socket.emit('join_channel', { channelId, authToken })
-    }
     setOpenJoin(false)
     dispatch(setCurrentChannel(channelId))
     props.history.push(`/channel/${channelId}`)

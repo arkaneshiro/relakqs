@@ -4,14 +4,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom"
 import Divider from '@material-ui/core/Divider';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ProtectedRoute } from './Auth'
-import io from 'socket.io-client'
 import Welcome from "./components/Welcome";
 import Channels from "./components/Channels";
 import Channel from "./components/Channel";
 import Sidebar from "./components/Sidebar";
 import useStyles from './styles/AppStyles';
-const { apiBaseUrl } = require("./config");
-const socket = io(`${apiBaseUrl}`)
 
 
 function App(props) {
@@ -38,14 +35,13 @@ function App(props) {
               path='/channels'
               component={Channels}
               currentUserId={currentUserId}
-              socket={socket}
             />
             <ProtectedRoute
               exact
               path='/channel/:channelId'
               component={Channel}
               currentUserId={currentUserId}
-              socket={socket}
+              // socket={socket}
             />
           </Switch>
         </BrowserRouter>
